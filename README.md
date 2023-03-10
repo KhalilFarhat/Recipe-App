@@ -1,2 +1,3 @@
 # Recipe-App
-AMOGUS
+POCKET EDITION
+RIP BOZO
