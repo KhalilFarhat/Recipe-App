@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--suppress ALL -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners android:radius="50dp" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <scale android:duration="150"
+            android:fromXScale="1.0"
+            android:fromYScale="1.0"
+            android:toXScale="0.9"
+            android:toYScale="0.9">
+            <shape android:shape="rectangle">
+                <corners android:radius="50dp" />
+                <solid android:color="@color/button_pressed_color" />
+            </shape>
+        </scale>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="50dp" />
+            <solid android:color="@color/button_normal_color" />
+        </shape>
+    </item>
+</selector>

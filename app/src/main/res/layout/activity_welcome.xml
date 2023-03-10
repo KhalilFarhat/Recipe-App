@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/bg2"
-        tools:ignore="ImageContrastCheck"
+        tools:ignore="ImageContrastCheck,UnusedAttribute"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
@@ -34,7 +34,8 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.51" />
+        app:layout_constraintVertical_bias="0.51"
+        tools:ignore="UnknownId" />
 
     <TextView
         android:id="@+id/textView2"
@@ -57,7 +58,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="312dp"
-        android:background="@drawable/btn_bg_design"
+        android:background="@drawable/button_rounded_corners_click"
         android:fontFamily="@font/poppinsblack"
         android:onClick="register"
         android:padding="14dp"
@@ -78,6 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppinsblack"
+        android:minHeight="48dp"
+        android:onClick="signin"
         android:text="Sign In"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
@@ -86,17 +89,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="207dp"
         android:layout_height="216dp"
-        android:tint="#FDFDFD"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/no_bg_logo" />
+        app:srcCompat="@drawable/no_bg_logo"
+        app:tint="#FDFDFD"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
