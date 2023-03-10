@@ -1,3 +1,4 @@
 # Recipe-App
 POCKET EDITION
 RIP BOZO
+AMOGUS ඞඞඞඞඞඞඞඞ
