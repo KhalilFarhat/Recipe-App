@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CookBook</string>
+    <string name="cookbook">CookBook</string>
+    <string name="register">Register</string>
+    <string name="full_name">Full Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="register2">Register Account</string>
 </resources>
