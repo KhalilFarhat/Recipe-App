@@ -27,5 +27,7 @@ Android SDK 23 or higher
 Clone the repository
 Open the project in Android Studio
 Build and run the project on an emulator or physical device
-License
+---------------------------------------------------------------------------------------------------------------------------------------
+-License-
+---------------------------------------------------------------------------------------------------------------------------------------
 The Recipe App is licensed under the MIT License. See the LICENSE file for details.
