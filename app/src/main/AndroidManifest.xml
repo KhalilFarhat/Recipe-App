@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <meta-data
+        android:name="preloaded_fonts"
+        android:resource="@array/preloaded_fonts" />
+
     <application
-        android:icon="@drawable/smart_chef"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/smart_chef"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RecipeApp"
         tools:targetApi="33">
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeFragment"
+            android:exported="false" />
+        <activity
+            android:name=".Search"
+            android:exported="false" />
+        <activity
+            android:name=".SlideshowFragment"
+            android:exported="false" />
         <activity
             android:name=".RegistrationActivity"
             android:exported="false" />
@@ -29,15 +44,9 @@
             </intent-filter>
         </activity>
 
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </application>
-
         <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
+            android:name="android.app.lib_name"
+            android:value="" />
+    </application>
 
 </manifest>

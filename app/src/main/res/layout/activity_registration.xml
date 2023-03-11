@@ -113,6 +113,7 @@
 
 
     <Button
+        android:onClick="mainActivity"
         android:id="@+id/register"
         android:layout_width="170dp"
         android:layout_height="76dp"
