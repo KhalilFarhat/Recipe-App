@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Search icon -->
+
+    <!-- Search bar -->
+
+    <ImageView
+        android:id="@+id/search_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="340dp"
+        android:background="@color/black"
+        android:src="@drawable/baseline_search_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.398"
+        tools:ignore="ContentDescription" />
+
+    <EditText
+        android:id="@+id/search_bar"
+        android:layout_width="342dp"
+        android:layout_height="57dp"
+        android:background="@drawable/edit_text_bg"
+        android:hint="Search..."
+        android:inputType="text"
+        android:maxLines="1"
+        android:minHeight="48dp"
+        android:textColorHint="@color/white"
+        android:padding="8dp"
+        android:maxLength="34"
+        android:textColor="@color/white"
+        android:textCursorDrawable="@drawable/cursor_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.149"
+        tools:ignore="Autofill,HardcodedText,ObsoleteLayoutParam" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

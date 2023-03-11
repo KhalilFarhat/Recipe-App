@@ -11,4 +11,8 @@
     <color name="button_pressed_color">#FF0000</color>
     <color name="button_normal_color">#FF0000</color>
     <color name="ripple_color">#D3D3D3</color>
+    <color name="bottom_navigation_background">#D23A2F</color>
+    <color name="bottom_navigation_item_text_color">#FFFFFF</color>
+    <color name="dark_grey">#333333</color>
+    <color name="light_grey">#DAD8D8</color>
 </resources>

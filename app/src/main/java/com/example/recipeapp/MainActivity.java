@@ -1,63 +1,62 @@
 package com.example.recipeapp;
 
-import android.os.Bundle;
-
-import android.view.MenuItem;
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.navigation.NavigationView;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
-@SuppressWarnings("ALL")
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
+    private FragmentManager fragmentManager;
+
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment = null;
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    fragment = new HomeFragment();
+                    break;
+                case R.id.nav_search:
+                    fragment = new SearchFragment();
+                    break;
+                case R.id.nav_account:
+                    fragment = new AccountFragment();
+                    break;
+                case R.id.nav_settings:
+                    fragment = new SettingsFragment();
+                    break;
+            }
+
+            if (fragment != null) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.content_frame, fragment);
+                transaction.commit();
+            }
+
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Find the DrawerLayout and NavigationView
-        drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        // Set a listener for when menu items are selected
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                // Handle navigation view item clicks here
-                int id = menuItem.getItemId();
-
-                if (id == R.id.nav_home) {
-                    // Switch to home fragment or activity
-                } else if (id == R.id.nav_search) {
-                    // Switch to search fragment or activity
-                } else if (id == R.id.nav_account) {
-                    // Switch to account fragment or activity
-                } else if (id == R.id.nav_settings) {
-                    // Switch to settings fragment or activity
-                }
-
-                // Close the navigation drawer
-                drawerLayout.closeDrawer(GravityCompat.START);
-
-                return true;
-            }
-        });
-    }
-
-    // Override onBackPressed to close the drawer if it's open
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.content_frame, new HomeFragment());
+        transaction.commit();
     }
 }
