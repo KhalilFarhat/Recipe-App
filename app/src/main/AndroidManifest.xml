@@ -5,6 +5,7 @@
     <meta-data
         android:name="preloaded_fonts"
         android:resource="@array/preloaded_fonts" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -21,12 +22,6 @@
             android:exported="false" />
         <activity
             android:name=".HomeFragment"
-            android:exported="false" />
-        <activity
-            android:name=".Search"
-            android:exported="false" />
-        <activity
-            android:name=".SlideshowFragment"
             android:exported="false" />
         <activity
             android:name=".RegistrationActivity"

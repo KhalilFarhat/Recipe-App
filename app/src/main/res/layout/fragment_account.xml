@@ -12,8 +12,10 @@
         android:layout_height="57dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="648dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/edit_text_bg"
         android:text="Logout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText,UsingOnClickInXml" />
