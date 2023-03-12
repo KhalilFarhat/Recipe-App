@@ -9,22 +9,17 @@
             android:summary="Enable or disable notifications"
             android:defaultValue="true" />
 
-        <EditTextPreference
-            android:key="username"
-            android:title="Username"
-            android:summary="Enter your username"
-            android:defaultValue="JohnDoe" />
-
+        <Preference
+            android:title="App License"
+            android:summary="This app is licensed under the MIT License.\nThank you for using our app!"
+            android:key="license" />
+        <Preference
+            android:title="App Version"
+            android:summary="@string/app_version" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Advanced Settings">
-
-        <EditTextPreference
-            android:key="server_url"
-            android:title="Server URL"
-            android:summary="Enter the URL of your server"
-            android:defaultValue="http://example.com" />
 
         <CheckBoxPreference
             android:key="debug_mode"
