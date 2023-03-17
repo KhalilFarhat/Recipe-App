@@ -15,6 +15,7 @@
         android:layout_width="342dp"
         android:layout_height="57dp"
         android:layout_marginStart="40dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/edit_text_bg"
         android:drawableStart="@drawable/baseline_search_24"
@@ -27,13 +28,32 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textCursorDrawable="@drawable/cursor_color"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044"
         tools:ignore="Autofill,HardcodedText,ObsoleteLayoutParam,RtlSymmetry" />
 
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="17dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="7dp"
+
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/search_bar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_RV"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        tools:listitem="@layout/recipe_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
