@@ -8,6 +8,12 @@
             android:title="Notifications"
             android:summary="Enable or disable notifications"
             android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="dark_mode"
+            android:title="Dark Mode (Beta)"
+            android:summaryOn="Enabled"
+            android:summaryOff="Disabled"
+            android:defaultValue="false" />
 
         <Preference
             android:title="App License"
@@ -16,16 +22,6 @@
         <Preference
             android:title="App Version"
             android:summary="@string/app_version" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Advanced Settings">
-
-        <CheckBoxPreference
-            android:key="debug_mode"
-            android:title="Debug Mode"
-            android:summary="Enable or disable debug mode"
-            android:defaultValue="false" />
 
     </PreferenceCategory>
 
