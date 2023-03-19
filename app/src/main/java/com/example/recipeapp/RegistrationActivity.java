@@ -72,17 +72,21 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
                 else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(RegistrationActivity.this, "Please insert email properly", Toast.LENGTH_SHORT).show();
-                }else{
+                }
+                else if(password.length()<8) {
+                        Toast.makeText(RegistrationActivity.this, "The password should be more than 8 characters", Toast.LENGTH_SHORT).show();
+                }
+                else if(name.length()<8) {
+                    Toast.makeText(RegistrationActivity.this, "The name should be more than 8 characters", Toast.LENGTH_SHORT).show();
+                }
+                else{
                     if (myDB.isEmailAlreadyExist(email)) {
                         Toast.makeText(RegistrationActivity.this, "This email is already used!", Toast.LENGTH_SHORT).show();
                     }else {
                         myDB.addUser(name, email, password);
-                        String emptyText = "";
-                        input_name.setText(emptyText);
-                        input_email.setText(emptyText);
-                        input_password.setText(emptyText);
                         Intent intent= new Intent(RegistrationActivity.this, MainActivity.class);
                         intent.putExtra("name", name);
+                        startActivity(intent);
                     }
                 }
             }
