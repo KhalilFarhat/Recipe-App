@@ -2,6 +2,7 @@ package com.example.recipeapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
@@ -19,12 +20,13 @@ public class dbHelper extends SQLiteOpenHelper {
     private static String COLUMN_id = "user_id";
     private static String COLUMN_NAME = "user_name";
     private static String COLUMN_EMAIL = "user_email";
-    private static String COLUMN_PASSWORD = "user_password" +
-            "";
+    private static String COLUMN_PASSWORD = "user_password";
+
     public dbHelper(@Nullable Context context) {
-        super(context,  DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -32,7 +34,7 @@ public class dbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_NAME +
                         " ("+ COLUMN_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_NAME + " TEXT, " +
-                        COLUMN_EMAIL + " TEXT, "+
+                        COLUMN_EMAIL + " TEXT UNIQUE, "+
                         COLUMN_PASSWORD + " TEXT);";
         db.execSQL(query);
     }
@@ -56,4 +58,14 @@ public class dbHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public boolean isEmailAlreadyExist(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+        boolean emailExists = cursor.moveToFirst();
+        cursor.close();
+        return emailExists;
+    }
+
 }
