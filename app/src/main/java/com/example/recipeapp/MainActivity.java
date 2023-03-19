@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.content_frame, new HomeFragment());
         transaction.commit();
 
+        String name = getIntent().getStringExtra("name");
 
     }
 }

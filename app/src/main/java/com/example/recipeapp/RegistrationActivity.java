@@ -81,7 +81,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         input_name.setText(emptyText);
                         input_email.setText(emptyText);
                         input_password.setText(emptyText);
-                        startActivity(new Intent(RegistrationActivity.this,MainActivity.class));
+                        Intent intent= new Intent(RegistrationActivity.this, MainActivity.class);
+                        intent.putExtra("name", name);
                     }
                 }
             }
