@@ -42,7 +42,8 @@ public class SearchFragment extends Fragment {
     }
     EditText search_bar;
     Button searchButton;
-    String url = "https://tasty.p.rapidapi.com/recipes/auto-complete?prefix=";
+//    String url = "https://tasty.p.rapidapi.com/recipes/auto-complete?prefix=";
+    String url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
     String API_KEY = "aa6ae0dc19msh6e0cc07dbbaf6e0p1a9929jsndebdafb85b5b";
 
     private RecipeAdapter adapter;
@@ -74,9 +75,9 @@ public class SearchFragment extends Fragment {
         Request request = new Request.Builder()
                 .url(url+recipe)
                 .get()
-                .addHeader("X-RapidAPI-Key", API_KEY)
-                .addHeader("X-RapidAPI-Host", "tasty.p.rapidapi.com")
                 .build();
+//                .addHeader("X-RapidAPI-Key", API_KEY)
+//                .addHeader("X-RapidAPI-Host", "tasty.p.rapidapi.com")
 
         Call call = client.newCall(request);
 
