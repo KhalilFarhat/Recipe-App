@@ -50,6 +50,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_NAME, name);
         cv.put(COLUMN_EMAIL, email);
+        cv.put(COLUMN_PASSWORD, password);
         long result = db.insert(TABLE_NAME, null, cv);
         if (result == -1){
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
@@ -67,5 +68,12 @@ public class dbHelper extends SQLiteOpenHelper {
         cursor.close();
         return emailExists;
     }
-
+    public boolean isPasswordCorrect(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ? AND " + COLUMN_PASSWORD + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email,password});
+        boolean isCorrect = cursor.moveToFirst();
+        cursor.close();
+        return isCorrect;
+    }
 }
