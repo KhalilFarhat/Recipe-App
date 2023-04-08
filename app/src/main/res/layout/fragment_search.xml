@@ -10,50 +10,34 @@
 
     <!-- Search bar -->
 
-    <EditText
-        android:id="@+id/search_bar"
-        android:layout_width="342dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/edit_text_bg"
-        android:drawableStart="@drawable/baseline_search_24"
-        android:hint="Search..."
-        android:inputType="text"
-        android:maxLength="27"
-        android:maxLines="1"
-        android:minHeight="48dp"
-        android:paddingStart="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textCursorDrawable="@drawable/cursor_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_margin="8dp"
+        android:layout_marginTop="20dp"
+        app:cardElevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Autofill,HardcodedText,ObsoleteLayoutParam,RtlSymmetry" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/search_btn"
-        android:layout_width="17dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="7dp"
+        <SearchView
+            android:id="@+id/searchview_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/search_bar"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:iconifiedByDefault="false"
+            android:queryHint="Search for your recipe..."
+            android:searchIcon="@drawable/ic_baseline_search_24" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_RV"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="729dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"
-        tools:listitem="@layout/recipe_item" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        tools:listitem="@layout/list_random_recipe" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
