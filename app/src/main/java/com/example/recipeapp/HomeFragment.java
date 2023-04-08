@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -43,7 +47,8 @@ public class HomeFragment extends Fragment {
     RequestManager manager;
     RandomRecipeAdapter randomRecipeAdapter;
     RecyclerView recyclerView;
-
+    Spinner spinner;
+    List<String> tags = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,16 +63,24 @@ public class HomeFragment extends Fragment {
 
 
         dialog = new ProgressDialog(view.getContext());
+        manager = new RequestManager(view.getContext());
+
         dialog.setTitle("Loading...");
 
-        manager = new RequestManager(view.getContext());
-        manager.getRandomRecipes(randomRecipeResponseListener);
-
-        dialog.show();
+        spinner = view.findViewById(R.id.spinner2);
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
+                getActivity().getApplicationContext(),
+                R.array.tags,
+                R.layout.spinner_text
+        );
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_inner_text);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(spinnerSelectedListener);
 
 
         return view;
     }
+
     private final RandomRecipeResponseListener randomRecipeResponseListener = new RandomRecipeResponseListener() {
         @Override
         public void didFetch(RandomRecipeResponse response, String message) {
@@ -84,5 +97,18 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_LONG).show();
         }
     };
+    private final AdapterView.OnItemSelectedListener spinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            tags.clear();
+            tags.add(adapterView.getSelectedItem().toString().toLowerCase());
+            manager.getRandomRecipes(randomRecipeResponseListener,tags);
+            dialog.show();
+        }
 
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 }

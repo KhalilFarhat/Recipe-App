@@ -28,9 +28,9 @@ public class RequestManager {
         this.context = context;
     }
 
-    public void getRandomRecipes(RandomRecipeResponseListener listener){
+    public void getRandomRecipes(RandomRecipeResponseListener listener, List<String> tags){
         CallRandomRecipes callRandomRecipes = retrofit.create(CallRandomRecipes.class);
-        Call<RandomRecipeResponse> call = callRandomRecipes.callRandomRecipe(context.getString(R.string.api_key),"10");
+        Call<RandomRecipeResponse> call = callRandomRecipes.callRandomRecipe(context.getString(R.string.api_key),"10", tags);
         call.enqueue(new Callback<RandomRecipeResponse>() {
             @Override
             public void onResponse(Call<RandomRecipeResponse> call, Response<RandomRecipeResponse> response) {
@@ -52,7 +52,8 @@ public class RequestManager {
         @GET("recipes/random")
         Call<RandomRecipeResponse> callRandomRecipe(
                 @Query("apiKey") String apiKey,
-                @Query("number") String number
+                @Query("number") String number,
+                @Query("tags") List<String> tags
         );
     }
 
