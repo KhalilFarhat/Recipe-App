@@ -53,7 +53,6 @@
         android:id="@+id/input_name"
         android:layout_width="331dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#CCCCCC"
         android:drawableLeft="@drawable/baseline_account_circle_24"
@@ -67,6 +66,7 @@
         android:textColor="#FFFFFF"
         android:textColorHint="@color/white"
         android:textCursorDrawable="@drawable/cursor_color"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         tools:ignore="Autofill,MissingConstraints,RtlHardcoded,TextFields" />
@@ -75,7 +75,6 @@
         android:id="@+id/input_email"
         android:layout_width="333dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="#CCCCCC"
         android:drawableLeft="@drawable/baseline_email_24"
@@ -89,16 +88,18 @@
         android:textColor="#FFFFFF"
         android:textColorHint="@color/white"
         android:textCursorDrawable="@drawable/cursor_color"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_name"
         tools:ignore="Autofill,MissingConstraints,RtlHardcoded,TextFields" />
+
 
     <EditText
         android:id="@+id/input_password"
         android:layout_width="277dp"
         android:layout_height="55dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="50dp"
         android:backgroundTint="#CCCCCC"
         android:drawableLeft="@drawable/baseline_key_24"
         android:drawablePadding="13dp"
@@ -112,11 +113,11 @@
         android:textColor="#FFFFFF"
         android:textColorHint="@color/white"
         android:textCursorDrawable="@drawable/cursor_color"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_email"
         app:passwordToggleEnabled="true"
         tools:ignore="Autofill,MissingConstraints,RtlHardcoded,TextFields,UsingOnClickInXml" />
-
 
     <ImageView
         android:id="@+id/show_hide_password"
@@ -130,8 +131,8 @@
 
     <Button
         android:id="@+id/register_btn"
-        android:layout_width="170dp"
-        android:layout_height="76dp"
+        android:layout_width="166dp"
+        android:layout_height="62dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/button_rounded_corners_click"
@@ -142,7 +143,7 @@
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/input_password"
@@ -150,20 +151,22 @@
 
     <Button
         android:id="@+id/back"
-        android:layout_width="170dp"
-        android:layout_height="76dp"
+        android:layout_width="147dp"
+        android:layout_height="62dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="19dp"
         android:background="@drawable/button_rounded_corners_click"
         android:fontFamily="@font/poppinsblack"
+        android:onClick="back"
         android:padding="14dp"
         android:text="@string/back"
-        android:onClick="back"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/register_btn"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/input_password"
         tools:ignore="DuplicateSpeakableTextCheck,HardcodedText,MissingConstraints,UsingOnClickInXml,VisualLintButtonSize" />
@@ -172,8 +175,8 @@
         android:id="@+id/textView5"
         android:layout_width="150dp"
         android:layout_height="55dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/poppinsblack"
         android:gravity="center"
         android:text="Already Registered?"
@@ -185,10 +188,12 @@
         tools:ignore="HardcodedText,MissingConstraints,TextSizeCheck" />
 
     <TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="100dp"
         android:fontFamily="@font/poppinsblack"
         android:minHeight="48dp"
         android:onClick="signin"
@@ -197,6 +202,7 @@
         android:textColor="@color/red"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/register_btn"
         tools:ignore="HardcodedText" />

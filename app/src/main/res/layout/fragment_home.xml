@@ -13,9 +13,9 @@
 
         <Spinner
             android:id="@+id/spinner2"
-            android:layout_width="171dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
+            android:layout_width="172dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:entries="@array/tags"
             app:layout_constraintStart_toEndOf="@+id/textView_welcome"
@@ -23,8 +23,8 @@
 
         <TextView
             android:id="@+id/textView_welcome"
-            android:layout_width="208dp"
-            android:layout_height="69dp"
+            android:layout_width="168dp"
+            android:layout_height="71dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="13dp"
             android:fontFamily="@font/poppinsblack"
