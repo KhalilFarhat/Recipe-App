@@ -99,7 +99,7 @@ private final RandomRecipeResponseListener randomRecipeResponseListener = new Ra
         randomRecipeAdapter = new RandomRecipeAdapter(getActivity().getApplicationContext(),response.getRecipes());
         recyclerView.setAdapter(randomRecipeAdapter);
     }
-
+//
     @Override
     public void didError(String message) {
         Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_LONG).show();
