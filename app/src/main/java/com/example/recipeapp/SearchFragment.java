@@ -46,7 +46,7 @@ public class SearchFragment extends Fragment {
     String url = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
     String API_KEY = "aa6ae0dc19msh6e0cc07dbbaf6e0p1a9929jsndebdafb85b5b";
 
-    private RecipeAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,78 +54,16 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         search_bar = view.findViewById(R.id.search_bar);
         searchButton = view.findViewById(R.id.search_btn);
-        RecyclerView recyclerView = view.findViewById(R.id.search_RV);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecipeAdapter();
-        recyclerView.setAdapter(adapter);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String query = search_bar.getText().toString();
-                GetRecipe(query);
             }
         });
 
     return view;
     }
+//API calss
 
-    public void GetRecipe(String recipe) {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url+recipe)
-                .get()
-                .build();
-//                .addHeader("X-RapidAPI-Key", API_KEY)
-//                .addHeader("X-RapidAPI-Host", "tasty.p.rapidapi.com")
-
-        Call call = client.newCall(request);
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "Error during API call: " + e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseString = response.body().string();
-                Log.d(TAG, "API Response: " + responseString);
-                ArrayList<RecipeAdapter.Recipe> recipeNames = decodeResponse(responseString);
-                displayResults(recipeNames);
-            }
-        });
-    }
-    public void displayResults(ArrayList<RecipeAdapter.Recipe> recipeNames) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                adapter.setRecipeList(recipeNames);
-            }
-        });
-    }
-    private ArrayList<RecipeAdapter.Recipe> decodeResponse(String json) {
-        ArrayList<RecipeAdapter.Recipe> recipes = new ArrayList<>();
-
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray resultsArray = jsonObject.getJSONArray("results");
-
-            for (int i = 0; i < resultsArray.length(); i++) {
-                JSONObject resultObject = resultsArray.getJSONObject(i);
-                String type = resultObject.getString("type");
-                Log.d(TAG, "API Response: " + type);
-
-                if (type.equals("ingredient")) {
-                    String recipeName = resultObject.getString("display");
-                    RecipeAdapter.Recipe recipe = new RecipeAdapter.Recipe(recipeName,"LOL");
-                    recipes.add(recipe);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return recipes;
-    }
 }
