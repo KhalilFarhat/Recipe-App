@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/RandomRecipeContainer"
     android:layout_height="wrap_content"
@@ -18,14 +19,15 @@
             android:id="@+id/textView_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
             android:fontFamily="@font/poppinsblack"
             android:gravity="center"
-            android:text="Dish Name"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:textSize="22dp"
             android:marqueeRepeatLimit="marquee_forever"
-            android:textColor="@color/black" />
+            android:singleLine="true"
+            android:text="Dish Name"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            tools:ignore="HardcodedText,TextSizeCheck" />
 
         <ImageView
             android:id="@+id/imageView_food"
@@ -34,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="106dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/burger2" />
+            app:srcCompat="@drawable/burger2"
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +54,8 @@
                 android:gravity="center"
                 android:text="Servings"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/textView_duration"
@@ -63,7 +67,8 @@
                 android:text="Time"
 
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 </LinearLayout>

@@ -17,7 +17,8 @@
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RV_myrecipes"
@@ -55,7 +56,8 @@
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_Welcome" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_Welcome"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/txt_yourfav"
@@ -68,5 +70,6 @@
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RV_myrecipes" />
+        app:layout_constraintTop_toBottomOf="@+id/RV_myrecipes"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

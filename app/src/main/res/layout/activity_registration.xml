@@ -127,7 +127,8 @@
         android:layout_marginTop="32dp"
         android:src="@drawable/closedeye"
         app:layout_constraintStart_toEndOf="@+id/input_password"
-        app:layout_constraintTop_toBottomOf="@+id/input_email" />
+        app:layout_constraintTop_toBottomOf="@+id/input_email"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/register_btn"
@@ -147,7 +148,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/input_password"
-        tools:ignore="DuplicateSpeakableTextCheck,MissingConstraints,VisualLintButtonSize" />
+        tools:ignore="DuplicateSpeakableTextCheck,MissingConstraints,UsingOnClickInXml,VisualLintButtonSize" />
 
     <Button
         android:id="@+id/back"
@@ -205,5 +206,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/register_btn"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText,UsingOnClickInXml" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,15 +12,14 @@ import androidx.annotation.Nullable;
 public class dbHelper extends SQLiteOpenHelper {
 
 
-    private Context context;
-    private static String DATABASE_NAME = "MyDataBase.db";
-    private static int DATABASE_VERSION = 1;
+    private final Context context;
+    private static final String DATABASE_NAME = "MyDataBase.db";
+    private static final int DATABASE_VERSION = 1;
 
-    private static String TABLE_NAME = "Users";
-    private static String COLUMN_id = "user_id";
-    private static String COLUMN_NAME = "user_name";
-    private static String COLUMN_EMAIL = "user_email";
-    private static String COLUMN_PASSWORD = "user_password";
+    private static final String TABLE_NAME = "Users";
+    private static final String COLUMN_NAME = "user_name";
+    private static final String COLUMN_EMAIL = "user_email";
+    private static final String COLUMN_PASSWORD = "user_password";
 
     public dbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,6 +29,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String COLUMN_id = "user_id";
         String query =
                 "CREATE TABLE " + TABLE_NAME +
                         " ("+ COLUMN_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

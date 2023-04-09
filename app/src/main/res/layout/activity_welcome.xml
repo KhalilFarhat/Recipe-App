@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/bg2"
-        tools:ignore="ImageContrastCheck,UnusedAttribute"
+        tools:ignore="ContentDescription,ImageContrastCheck,UnusedAttribute"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
@@ -51,7 +51,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button"
@@ -72,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintWidth_percent=".8"
-        tools:ignore="VisualLintButtonSize" />
+        tools:ignore="HardcodedText,UsingOnClickInXml,VisualLintButtonSize" />
 
     <TextView
         android:layout_width="match_parent"
@@ -90,7 +91,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText,UsingOnClickInXml" />
 
     <ImageView
         android:id="@+id/imageView5"

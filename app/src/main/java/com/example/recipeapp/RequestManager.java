@@ -2,9 +2,12 @@ package com.example.recipeapp;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
+import com.example.recipeapp.Listeners.RecipeDetailsListener;
 import com.example.recipeapp.Models.RandomRecipeResponse;
+import com.example.recipeapp.Models.RecipeDetailsResponse;
 
 import java.util.List;
 
@@ -18,14 +21,15 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class RequestManager {
-    Context context;
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://api.spoonacular.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+    private final Context context;
+    private final Retrofit retrofit;
 
     public RequestManager(Context context) {
         this.context = context;
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.spoonacular.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public void getRandomRecipes(RandomRecipeResponseListener listener, List<String> tags){
@@ -33,7 +37,7 @@ public class RequestManager {
         Call<RandomRecipeResponse> call = callRandomRecipes.callRandomRecipe(context.getString(R.string.api_key),"10", tags);
         call.enqueue(new Callback<RandomRecipeResponse>() {
             @Override
-            public void onResponse(Call<RandomRecipeResponse> call, Response<RandomRecipeResponse> response) {
+            public void onResponse(@NonNull Call<RandomRecipeResponse> call, @NonNull Response<RandomRecipeResponse> response) {
                 if(!response.isSuccessful()){
                     listener.didError(response.message());
                     return;
@@ -42,13 +46,33 @@ public class RequestManager {
             }
 
             @Override
-            public void onFailure(Call<RandomRecipeResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<RandomRecipeResponse> call, @NonNull Throwable t) {
                 listener.didError(t.getMessage());
             }
         });
     }
 
-    private interface CallRandomRecipes{
+    public void getRecipeDetails(RecipeDetailsListener listener , int id ){
+        CallRecipeDetails callRecipeDetails = retrofit.create(CallRecipeDetails.class);
+        Call<RecipeDetailsResponse> call = callRecipeDetails.callRecipeDetails(id, context.getString(R.string.api_key));
+        call.enqueue(new Callback<RecipeDetailsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<RecipeDetailsResponse> call, @NonNull Response<RecipeDetailsResponse> response) {
+                if(!response.isSuccessful()){
+                    listener.didError(response.message());
+                    return;
+                }
+                listener.didFetch(String.valueOf(response.body()), response.message());
+            }
+
+            @Override
+            public void onFailure(Call<RecipeDetailsResponse> call, Throwable t) {
+                listener.didError(t.getMessage());
+            }
+        });
+    }
+
+    interface CallRandomRecipes{
         @GET("recipes/random")
         Call<RandomRecipeResponse> callRandomRecipe(
                 @Query("apiKey") String apiKey,
@@ -57,5 +81,11 @@ public class RequestManager {
         );
     }
 
-
+    interface CallRecipeDetails{
+        @GET ("recipes/{id}/information")
+        Call<RecipeDetailsResponse> callRecipeDetails(
+                @Path("id") int id,
+                @Query("apiKey") String apiKey
+        );
+    }
 }

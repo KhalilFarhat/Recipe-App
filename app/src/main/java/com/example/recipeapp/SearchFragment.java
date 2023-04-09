@@ -1,45 +1,29 @@
 package com.example.recipeapp;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipeapp.Adapters.RandomRecipeAdapter;
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
+import com.example.recipeapp.Listeners.RecipeClickListener;
 import com.example.recipeapp.Models.RandomRecipeResponse;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import java.util.Objects;
 
 public class SearchFragment extends Fragment {
     ProgressDialog dialog;
@@ -88,23 +72,35 @@ public class SearchFragment extends Fragment {
         });
     return view;
     }
-//API calls
-private final RandomRecipeResponseListener randomRecipeResponseListener = new RandomRecipeResponseListener() {
-    @Override
-    public void didFetch(RandomRecipeResponse response, String message) {
-        dialog.dismiss();
-        recyclerView = getView().findViewById(R.id.search_RV);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),1));
-        randomRecipeAdapter = new RandomRecipeAdapter(getActivity().getApplicationContext(),response.getRecipes());
-        recyclerView.setAdapter(randomRecipeAdapter);
-    }
-//
-    @Override
-    public void didError(String message) {
-        Toast.makeText(getActivity().getApplicationContext(),message,Toast.LENGTH_LONG).show();
-    }
-};
+
+    //API calls
+    private final RandomRecipeResponseListener randomRecipeResponseListener = new RandomRecipeResponseListener() {
+        @Override
+        public void didFetch(RandomRecipeResponse response, String message) {
+            dialog.dismiss();
+            recyclerView = requireView().findViewById(R.id.search_RV);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new GridLayoutManager(requireActivity().getApplicationContext(), 1));
+            randomRecipeAdapter = new RandomRecipeAdapter(requireActivity().getApplicationContext(), response.getRecipes(), recipeClickListener());
+            recyclerView.setAdapter(randomRecipeAdapter);
+        }
+
+        private RecipeClickListener recipeClickListener() {
+            return new RecipeClickListener() {
+                @Override
+                public void onRecipeClicked(String id) {
+                    Toast.makeText(requireActivity(), id, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(requireActivity(), RecipeDetailsActivity.class).putExtra("id", id));
+                }
+            };
+        }
+
+        //
+        @Override
+        public void didError(String message) {
+            Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        }
+    };
     private final AdapterView.OnItemSelectedListener spinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {

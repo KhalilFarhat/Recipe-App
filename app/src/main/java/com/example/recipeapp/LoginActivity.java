@@ -28,31 +28,29 @@ public class LoginActivity extends AppCompatActivity {
         input_password=findViewById(R.id.input_password);
         myDB = new dbHelper(LoginActivity.this);
         show_hide_password = findViewById(R.id.show_hide_password);
-        show_hide_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(val ==1){
-                    input_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    show_hide_password.setImageResource(R.drawable.openeye);
-                    val = 0;
-                }
-                else if(val ==0){
-                    input_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    show_hide_password.setImageResource(R.drawable.closedeye);
-                    val = 1;
-                }
+        show_hide_password.setOnClickListener(view -> {
+            if(val ==1){
+                input_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                show_hide_password.setImageResource(R.drawable.openeye);
+                val = 0;
+            }
+            else if(val ==0){
+                input_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                show_hide_password.setImageResource(R.drawable.closedeye);
+                val = 1;
             }
         });
-        register_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = input_email.getText().toString().trim();
-                String password = input_password.getText().toString().trim();
+        register_btn.setOnClickListener(view -> {
+            String email = input_email.getText().toString().trim();
+            String password = input_password.getText().toString().trim();
 
-                if (input_email.getText().toString() == null || input_email.getText().toString().isEmpty()){
-                    Toast.makeText(LoginActivity.this, "Please insert email", Toast.LENGTH_SHORT).show();
-                }
-                else if (input_password.getText().toString() == null || input_password.getText().toString().isEmpty()){
+            input_email.getText().toString();
+            if (input_email.getText().toString().isEmpty()){
+                Toast.makeText(LoginActivity.this, "Please insert email", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                input_password.getText().toString();
+                if (input_password.getText().toString().isEmpty()){
                     Toast.makeText(LoginActivity.this, "Please insert password", Toast.LENGTH_SHORT).show();
                 }
                 else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {

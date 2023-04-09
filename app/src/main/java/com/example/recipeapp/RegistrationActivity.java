@@ -1,11 +1,8 @@
 package com.example.recipeapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -13,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -35,58 +34,59 @@ public class RegistrationActivity extends AppCompatActivity {
         show_hide_password=findViewById(R.id.show_hide_password);
         myDB = new dbHelper(RegistrationActivity.this);
 
-        show_hide_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(val ==1){
-                    //input_password.set("false");
-                    input_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    show_hide_password.setImageResource(R.drawable.openeye);
-                    val = 0;
-                }
-                else if(val ==0){
-                    //input_password.setPassword("true");
-                    input_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    show_hide_password.setImageResource(R.drawable.closedeye);
-                    val = 1;
-                }
+        show_hide_password.setOnClickListener(view -> {
+            if(val ==1){
+                //input_password.set("false");
+                input_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                show_hide_password.setImageResource(R.drawable.openeye);
+                val = 0;
+            }
+            else if(val ==0){
+                //input_password.setPassword("true");
+                input_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                show_hide_password.setImageResource(R.drawable.closedeye);
+                val = 1;
             }
         });
 
-        register_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        register_btn.setOnClickListener(view -> {
 
-                String name = input_name.getText().toString().trim();
-                String email = input_email.getText().toString().trim();
-                String password = input_password.getText().toString().trim();
+            String name = input_name.getText().toString().trim();
+            String email = input_email.getText().toString().trim();
+            String password = input_password.getText().toString().trim();
 
-                if(input_name.getText().toString() == null || input_name.getText().toString().isEmpty() || name.isEmpty()){
-                    Toast.makeText(RegistrationActivity.this, "Please insert name", Toast.LENGTH_SHORT).show();
-                }
-                else if (input_email.getText().toString() == null || input_email.getText().toString().isEmpty() || name.isEmpty()){
+            input_name.getText().toString();
+            if(input_name.getText().toString().isEmpty() || name.isEmpty()){
+                Toast.makeText(RegistrationActivity.this, "Please insert name", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                input_email.getText().toString();
+                if (input_email.getText().toString().isEmpty()){
                     Toast.makeText(RegistrationActivity.this, "Please insert email", Toast.LENGTH_SHORT).show();
                 }
-                else if (input_password.getText().toString() == null || input_password.getText().toString().isEmpty() || name.isEmpty()){
-                    Toast.makeText(RegistrationActivity.this, "Please insert password", Toast.LENGTH_SHORT).show();
-                }
-                else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(RegistrationActivity.this, "Please insert email properly", Toast.LENGTH_SHORT).show();
-                }
-                else if(password.length()<8) {
-                        Toast.makeText(RegistrationActivity.this, "The password should be more than 8 characters", Toast.LENGTH_SHORT).show();
-                }
-                else if(name.length()<8) {
-                    Toast.makeText(RegistrationActivity.this, "The name should be more than 8 characters", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if (myDB.isEmailAlreadyExist(email)) {
-                        Toast.makeText(RegistrationActivity.this, "This email is already used!", Toast.LENGTH_SHORT).show();
-                    }else {
-                        myDB.addUser(name, email, password);
-                        Intent intent= new Intent(RegistrationActivity.this, MainActivity.class);
-                        intent.putExtra("name", name);
-                        startActivity(intent);
+                else {
+                    input_password.getText().toString();
+                    if (input_password.getText().toString().isEmpty()){
+                        Toast.makeText(RegistrationActivity.this, "Please insert password", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                        Toast.makeText(RegistrationActivity.this, "Please insert email properly", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(password.length()<8) {
+                            Toast.makeText(RegistrationActivity.this, "The password should be more than 8 characters", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(name.length()<8) {
+                        Toast.makeText(RegistrationActivity.this, "The name should be more than 8 characters", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        if (myDB.isEmailAlreadyExist(email)) {
+                            Toast.makeText(RegistrationActivity.this, "This email is already used!", Toast.LENGTH_SHORT).show();
+                        }else {
+                            myDB.addUser(name, email, password);
+                            Intent intent= new Intent(RegistrationActivity.this, MainActivity.class);
+                            intent.putExtra("name", name);
+                            startActivity(intent);
+                        }
                     }
                 }
             }
