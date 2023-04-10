@@ -76,11 +76,11 @@ public class RequestManager {
 
     public void getSimilarRecipes(SimilarRecipesListener listener, int id){
         CallSimilarRecipes callSimilarRecipes = retrofit.create(CallSimilarRecipes.class);
-        Call<SimilarRecipeResponse> call = callSimilarRecipes.callSimilarRecipe(id, "4", context.getString(R.string.api_key));
-        call.enqueue(new Callback<SimilarRecipeResponse>() {
+        Call<List<SimilarRecipeResponse>> call = callSimilarRecipes.callSimilarRecipe(id, context.getString(R.string.api_key));
+        call.enqueue(new Callback<List<SimilarRecipeResponse>>() {
             @Override
-            public void onResponse(@NonNull Call<SimilarRecipeResponse> call, @NonNull Response<SimilarRecipeResponse> response) {
-                if(!response.isSuccessful()){
+            public void onResponse(Call<List<SimilarRecipeResponse>> call, Response<List<SimilarRecipeResponse>> response) {
+                if (!response.isSuccessful()){
                     listener.didError(response.message());
                     return;
                 }
@@ -88,7 +88,7 @@ public class RequestManager {
             }
 
             @Override
-            public void onFailure(@NonNull Call<SimilarRecipeResponse> call, @NonNull Throwable t) {
+            public void onFailure(Call<List<SimilarRecipeResponse>> call, Throwable t) {
                 listener.didError(t.getMessage());
             }
         });
@@ -113,9 +113,9 @@ public class RequestManager {
 
     private interface CallSimilarRecipes{
         @GET ("recipes/{id}/similar")
-        Call<SimilarRecipeResponse> callSimilarRecipe(
+        Call<List<SimilarRecipeResponse>> callSimilarRecipe(
                 @Path("id") int id,
-                @Query("number") String number,
+
                 @Query("apiKey") String apiKey
         );
     }

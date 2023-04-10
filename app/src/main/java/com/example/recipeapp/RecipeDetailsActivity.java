@@ -9,6 +9,7 @@ import com.example.recipeapp.Listeners.RecipeClickListener;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,12 +27,11 @@ import java.util.List;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
-    int id = 0;
+    int id;
     TextView textView_meal_name, textView_meal_source, textView_meal_summary, textView_similar_title, textView_similar_serving;
     ImageView imageView_meal_image;
     RecyclerView recycler_meal_ingredients, recycler_meal_similar;
     ProgressDialog dialog;
-
     IngredientsAdapter ingredientsAdapter;
     SimilarRecipeAdapter similarRecipeAdapter;
 
@@ -46,7 +46,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
 //        id = Integer.parseInt(getIntent().getStringExtra("id"));
 //        id = Integer.parseInt(getIntent().getStringExtra("id"));
-        id = getIntent().getIntExtra("id", 0);
+//        id = getIntent().getIntExtra("id", 0);
+        //Use this the above cause errors
+        id = Integer.valueOf(getIntent().getStringExtra("id"));
         RequestManager manager = new RequestManager(this);
         manager.getRecipeDetails(recipeDetailsListener, id);
         manager.getSimilarRecipes(similarRecipesListener, id);
@@ -88,6 +90,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private final SimilarRecipesListener similarRecipesListener = new SimilarRecipesListener() {
         @Override
         public void didFetch(List<SimilarRecipeResponse> response, String message) {
+            Toast.makeText(RecipeDetailsActivity.this, "LOL", Toast.LENGTH_LONG).show();
+            Log.d("RESPONSE",response.get(0).toString());
             recycler_meal_similar.setHasFixedSize(true);
             recycler_meal_similar.setLayoutManager(new LinearLayoutManager(RecipeDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
             similarRecipeAdapter = new SimilarRecipeAdapter(RecipeDetailsActivity.this, response, recipeClickListener);
@@ -95,7 +99,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
         @Override
         public void didError(String errorMessage) {
-            Toast.makeText(RecipeDetailsActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RecipeDetailsActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+            Log.d("ERORROOROR",errorMessage);
         }
     };
 
