@@ -1,10 +1,14 @@
 package com.example.recipeapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -12,9 +16,12 @@ import androidx.fragment.app.Fragment;
 public class AccountFragment extends Fragment {
 
 
+    dbHelper myDB;
     TextView txt_welcome;
+    Button SignOutBtn;
     public AccountFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -22,12 +29,20 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SharedPreferences sp = getActivity().getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
-        String username = "Ismail"; //WE fetch user name using intents
+        String username = myDB.getUsername(sp.getString("email", ""));
         txt_welcome = view.findViewById(R.id.txt_Welcome);
         txt_welcome.setText("Welcome, "+username);
 
+        SignOutBtn = view.findViewById(R.id.SignOutBtn);
+        SignOutBtn.setOnClickListener(view1 -> {
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("IsSignedIn", false).commit();
+            editor.putString("email", "").commit();
+            startActivity(new Intent(getActivity(),WelcomeActivity.class));
+        });
 
         return view;
     }

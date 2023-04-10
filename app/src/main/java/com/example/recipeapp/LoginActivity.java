@@ -2,7 +2,9 @@ package com.example.recipeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
+    SharedPreferences sp = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
     EditText input_email, input_password;
     Button register_btn;
     ImageView show_hide_password;
@@ -28,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         input_password=findViewById(R.id.input_password);
         myDB = new dbHelper(LoginActivity.this);
         show_hide_password = findViewById(R.id.show_hide_password);
+
         show_hide_password.setOnClickListener(view -> {
             if(val ==1){
                 input_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -44,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
             String email = input_email.getText().toString().trim();
             String password = input_password.getText().toString().trim();
 
-            input_email.getText().toString();
             if (input_email.getText().toString().isEmpty()){
                 Toast.makeText(LoginActivity.this, "Please insert email", Toast.LENGTH_SHORT).show();
             }
@@ -59,6 +62,10 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     if (myDB.isEmailAlreadyExist(email)) {
                         if (myDB.isPasswordCorrect(email,password)){
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putBoolean("IsSignedIn", true).commit();
+                            editor.putString("email", email).commit();
+
                             Intent intent= new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
