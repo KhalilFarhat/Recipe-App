@@ -47,14 +47,17 @@
                     android:gravity="center"
                     android:padding="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <ImageView
-                    android:id="@+id/imageView_meal_image"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
 
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp" />
+            <ImageView
+                android:id="@+id/imageView_meal_image"
+                android:layout_width="match_parent"
+                android:layout_height="221dp"
+
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textView_meal_summary"
@@ -63,6 +66,22 @@
                 android:padding="8dp"
                 android:textStyle="normal"
                 android:textColor="@color/black"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
+            <TextView
+                android:text="Similar Recipes"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:padding="8dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_meal_similar"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -74,7 +93,8 @@
                 android:padding="8dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_meal_ingredients"

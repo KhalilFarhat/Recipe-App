@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
 import com.example.recipeapp.Listeners.RecipeDetailsListener;
+import com.example.recipeapp.Listeners.SimilarRecipesListener;
 import com.example.recipeapp.Models.RandomRecipeResponse;
 import com.example.recipeapp.Models.RecipeDetailsResponse;
+import com.example.recipeapp.Models.SimilarRecipeResponse;
 
 import java.util.List;
 
@@ -66,7 +68,27 @@ public class RequestManager {
             }
 
             @Override
-            public void onFailure(Call<RecipeDetailsResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<RecipeDetailsResponse> call, @NonNull Throwable t) {
+                listener.didError(t.getMessage());
+            }
+        });
+    }
+
+    public void getSimilarRecipes(SimilarRecipesListener listener, int id){
+        CallSimilarRecipes callSimilarRecipes = retrofit.create(CallSimilarRecipes.class);
+        Call<SimilarRecipeResponse> call = callSimilarRecipes.callSimilarRecipe(id, "4", context.getString(R.string.api_key));
+        call.enqueue(new Callback<SimilarRecipeResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SimilarRecipeResponse> call, @NonNull Response<SimilarRecipeResponse> response) {
+                if(!response.isSuccessful()){
+                    listener.didError(response.message());
+                    return;
+                }
+                listener.didFetch(response.body(), response.message());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SimilarRecipeResponse> call, @NonNull Throwable t) {
                 listener.didError(t.getMessage());
             }
         });
@@ -85,6 +107,15 @@ public class RequestManager {
         @GET ("recipes/{id}/information")
         Call<RecipeDetailsResponse> callRecipeDetails(
                 @Path("id") int id,
+                @Query("apiKey") String apiKey
+        );
+    }
+
+    private interface CallSimilarRecipes{
+        @GET ("recipes/{id}/similar")
+        Call<SimilarRecipeResponse> callSimilarRecipe(
+                @Path("id") int id,
+                @Query("number") String number,
                 @Query("apiKey") String apiKey
         );
     }

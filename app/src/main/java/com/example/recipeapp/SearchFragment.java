@@ -89,7 +89,7 @@ public class SearchFragment extends Fragment {
             return new RecipeClickListener() {
                 @Override
                 public void onRecipeClicked(String id) {
-                    Toast.makeText(requireActivity(), id, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(requireActivity(), id, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(requireActivity(), RecipeDetailsActivity.class).putExtra("id", id));
                 }
             };
