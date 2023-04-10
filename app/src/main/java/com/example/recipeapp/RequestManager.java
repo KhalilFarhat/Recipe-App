@@ -62,7 +62,7 @@ public class RequestManager {
                     listener.didError(response.message());
                     return;
                 }
-                listener.didFetch(String.valueOf(response.body()), response.message());
+                listener.didFetch(response.body(), response.message());
             }
 
             @Override

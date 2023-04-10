@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
-    private int id;
+    int id = 0;
     private TextView textView_meal_name, textView_meal_source, textView_meal_summary;
     private ImageView imageView_meal_image;
     private RecyclerView recycler_meal_ingredients;
@@ -30,13 +30,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         findViews();
 
-        id = Integer.parseInt(getIntent().getStringExtra("id"));
+//        id = Integer.parseInt(getIntent().getStringExtra("id"));
+        id = Integer.valueOf(getIntent().getStringExtra("id"));
         RequestManager manager = new RequestManager(this);
         manager.getRecipeDetails(recipeDetailsListener, id);
-
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Details...");
         dialog.show();
+
     }
 
     private void findViews() {
@@ -61,12 +62,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(RecipeDetailsActivity.this, response.extendedIngredients);
             recycler_meal_ingredients.setAdapter(ingredientsAdapter);
         }
-
-        @Override
-        public void didFetch(String recipeDetails, String message) {
-
-        }
-
         @Override
         public void didError(String message) {
             Toast.makeText(RecipeDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
