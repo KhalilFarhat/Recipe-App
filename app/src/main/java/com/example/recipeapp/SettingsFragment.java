@@ -1,10 +1,17 @@
 package com.example.recipeapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.text.LineBreaker;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Layout;
+import android.view.Gravity;
+import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -69,16 +76,32 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public boolean onPreferenceClick(Preference preference) {
         if (preference.getKey().equals("privacy_policy")) {
             // Show the privacy policy dialog
-            showPrivacyPolicyDialog();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                showPrivacyPolicyDialog();
+            }
             return true;
         }
         return false;
     }
 
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void showPrivacyPolicyDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Privacy Policy");
-        builder.setMessage("This app collects anonymous usage data to help us improve the user experience. We do not collect or share any personal information about you. Your privacy is important to us, and we strive to ensure that your data is always protected. By using this app, you agree to our privacy policy and acknowledge that we may use anonymous usage data to improve our services.");
+
+        TextView message = new TextView(requireContext());
+        message.setText("This app collects anonymous usage data to help us improve the user experience. We do not collect or share any personal information about you. Your privacy is important to us, and we strive to ensure that your data is always protected. By using this app, you agree to our privacy policy and acknowledge that we may use anonymous usage data to improve our services.");
+        message.setPadding(50, 50, 50, 50);
+        message.setGravity(Gravity.START);
+        message.setTextSize(16);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                message.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
+            }
+        }
+        builder.setView(message);
+
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
@@ -86,5 +109,4 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         });
         builder.show();
     }
-
 }
