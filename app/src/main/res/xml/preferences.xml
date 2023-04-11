@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <PreferenceCategory android:title="General Settings">
+    <PreferenceCategory
+        android:title="General Settings"
+        android:layout_width="match_parent">
+        <CheckBoxPreference
+            android:key="auto_update"
+            android:title="Auto Update"
+            android:summary="Automatically update the app"
+            android:defaultValue="true"
+            android:layout_gravity="start" />
 
         <CheckBoxPreference
             android:key="notifications"
             android:title="Notifications"
             android:summary="Enable or disable notifications"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            android:layout_gravity="start" />
+
         <CheckBoxPreference
             android:key="dark_mode"
             android:title="Dark Mode (Beta)"
             android:summaryOn="Enabled"
             android:summaryOff="Disabled"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            android:layout_gravity="start" />
 
         <Preference
             android:title="App License"
             android:summary="This app is licensed under the MIT License.\nThank you for using our app!"
-            android:key="license" />
+            android:key="license"
+            android:layout_gravity="start" />
+
         <Preference
             android:title="App Version"
-            android:summary="@string/app_version" />
-
+            android:summary="@string/app_version"
+            android:layout_gravity="start" />
     </PreferenceCategory>
-
 </PreferenceScreen>
