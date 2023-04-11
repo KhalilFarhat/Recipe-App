@@ -16,6 +16,8 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_margin="8dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_searchview_bg"
+        app:cardCornerRadius="17dp"
         app:cardElevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +26,6 @@
             android:id="@+id/searchview_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:iconifiedByDefault="false"
             android:queryHint="Search for your recipe..."
             android:searchIcon="@drawable/ic_baseline_search_24" />
