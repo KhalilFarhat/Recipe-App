@@ -1,39 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- User Settings Category -->
     <PreferenceCategory
-        android:title="General Settings"
-        android:layout_width="match_parent">
+        android:title="User Settings"
+        app:iconSpaceReserved="false">
+
+        <!-- Auto Update Checkbox Preference -->
         <CheckBoxPreference
+            app:iconSpaceReserved="true"
             android:key="auto_update"
+            android:icon="@drawable/settings"
             android:title="Auto Update"
             android:summary="Automatically update the app"
-            android:defaultValue="true"
-            android:layout_gravity="start" />
+            android:defaultValue="true"/>
 
+        <!-- Notifications Checkbox Preference -->
         <CheckBoxPreference
+            app:iconSpaceReserved="true"
             android:key="notifications"
+            android:icon="@drawable/bell"
             android:title="Notifications"
             android:summary="Enable or disable notifications"
-            android:defaultValue="true"
-            android:layout_gravity="start" />
+            android:defaultValue="true"/>
 
+        <!-- Dark Mode Checkbox Preference -->
         <CheckBoxPreference
+            app:iconSpaceReserved="true"
             android:key="dark_mode"
             android:title="Dark Mode (Beta)"
             android:summaryOn="Enabled"
+            android:icon="@drawable/moon"
             android:summaryOff="Disabled"
-            android:defaultValue="false"
-            android:layout_gravity="start" />
+            android:defaultValue="false"/>
 
+    </PreferenceCategory>
+
+
+    <!-- App Information Category -->
+    <PreferenceCategory
+        android:title="App Information"
+        app:iconSpaceReserved="false">
+
+        <!-- Privacy Policy Preference -->
         <Preference
-            android:title="App License"
-            android:summary="This app is licensed under the MIT License.\nThank you for using our app!"
-            android:key="license"
-            android:layout_gravity="start" />
+            android:title="Privacy Policy"
+            android:summary="View our privacy policy"
+            android:icon="@drawable/privacy_policy"
+            android:key="privacy_policy"/>
 
+        <!-- App License Preference -->
+        <Preference
+            app:iconSpaceReserved="true"
+            android:title="App License"
+            android:icon="@drawable/license"
+            android:summary="This app is licensed under the MIT License.\nThank you for using our app!"
+            android:key="license"/>
+
+        <!-- App Version Preference -->
         <Preference
             android:title="App Version"
-            android:summary="@string/app_version"
-            android:layout_gravity="start" />
+            android:icon="@drawable/app_version"
+            android:summary="@string/app_version"/>
     </PreferenceCategory>
+
 </PreferenceScreen>
