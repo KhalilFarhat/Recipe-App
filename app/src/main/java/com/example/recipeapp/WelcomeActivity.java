@@ -22,9 +22,8 @@ public class WelcomeActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
         SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        if(sp.getBoolean("IsSignedIn", true)){
+        if(sp.getBoolean("IsSignedIn", false))
             startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
-        }
     }
 
     public void register(View view){

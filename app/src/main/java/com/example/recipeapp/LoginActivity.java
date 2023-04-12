@@ -15,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-
-    SharedPreferences sp = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
     EditText input_email, input_password;
     Button register_btn;
     ImageView show_hide_password;
@@ -62,9 +60,11 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     if (myDB.isEmailAlreadyExist(email)) {
                         if (myDB.isPasswordCorrect(email,password)){
+                            SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
-                            editor.putBoolean("IsSignedIn", true).commit();
-                            editor.putString("email", email).commit();
+                            editor.putBoolean("IsSignedIn", true);
+                            editor.putString("email", email);
+                            editor.commit();
 
                             Intent intent= new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);

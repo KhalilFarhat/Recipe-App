@@ -21,7 +21,7 @@ public class RegistrationActivity extends AppCompatActivity {
     Button register_btn;
     ImageView show_hide_password;
     dbHelper myDB;
-    SharedPreferences sp = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+    //SharedPreferences sp = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
     int val = 1;
 
     @SuppressLint("MissingInflatedId")
@@ -87,9 +87,9 @@ public class RegistrationActivity extends AppCompatActivity {
                         }else {
                             myDB.addUser(name, email, password);
                             Intent intent= new Intent(RegistrationActivity.this, MainActivity.class);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putBoolean("IsSignedIn", true).commit();
-                            editor.putString("email", email).commit();
+                            //SharedPreferences.Editor editor = sp.edit();
+                            //editor.putBoolean("IsSignedIn", true).commit();
+                            //editor.putString("email", email).commit();
                             startActivity(intent);
                         }
                     }
