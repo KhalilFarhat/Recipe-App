@@ -15,6 +15,7 @@ import com.example.recipeapp.Listeners.RecipeClickListener;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
-    FirebaseFirestore db;
+    //FirebaseFirestore db;
     List<Integer> trial;
     int id;
     TextView textView_meal_name, textView_meal_source, textView_meal_summary, textView_similar_title, textView_similar_serving;
@@ -65,7 +66,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_recipe_details);
         trial = new ArrayList<>();
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
         findViews();
 
 //        id = Integer.parseInt(getIntent().getStringExtra("id"));
@@ -160,45 +161,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         Toast.makeText(this, "CLICKED BOOKMARK" + id, Toast.LENGTH_LONG).show();
         String username = "TrialID";
         // Retrieve the current user's document from Firebase
-        DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
-        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        // Retrieve the current bookmark list
-                        List<String> bookmarks = (List<String>) document.get("Bookmarks");
-                        if (bookmarks == null) {
-                            bookmarks = new ArrayList<>();
-                        }
-
-                        // Add the new bookmark ID to the list
-                        bookmarks.add(id+"");
-
-                        // Update the Firebase document with the updated bookmark list
-                        userRef.update("Bookmarks", bookmarks)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d("TAG", "DocumentSnapshot successfully updated!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("TAG", "Error updating document", e);
-                                    }
-                                });
-                    } else {
-                        Log.d("TAG", "No such document");
-                    }
-                } else {
-                    Log.d("TAG", "get failed with ", task.getException());
-                }
-            }
-        });
-    }
+        //DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
+        dbHelper db = new dbHelper(getApplicationContext());
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String email = sp.getString("email", "");
+        ArrayList<Integer> Favorites = db.getBookmarks(email);
+        Log.d("omar",Favorites.size() + "");
+        }
 
 }
 
