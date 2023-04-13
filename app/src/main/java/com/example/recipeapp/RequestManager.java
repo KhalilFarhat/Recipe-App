@@ -132,7 +132,7 @@ public class RequestManager {
         );
     }
 
-    private interface CallSimilarRecipes{
+    interface CallSimilarRecipes{
         @GET ("recipes/{id}/similar")
         Call<List<SimilarRecipeResponse>> callSimilarRecipe(
                 @Path("id") int id,
@@ -148,4 +148,5 @@ public class RequestManager {
                 @Query("apiKey") String apiKey
         );
     }
+
 }
