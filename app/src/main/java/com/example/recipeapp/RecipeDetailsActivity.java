@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.recipeapp.Adapters.InstructionsAdapter;
+import com.example.recipeapp.Listeners.InstructionsListener;
 import com.example.recipeapp.Listeners.RecipeClickListener;
 
 
@@ -24,12 +27,14 @@ import com.example.recipeapp.Adapters.SimilarRecipeAdapter;
 import com.example.recipeapp.Listeners.RecipeClickListener;
 import com.example.recipeapp.Listeners.RecipeDetailsListener;
 import com.example.recipeapp.Listeners.SimilarRecipesListener;
+import com.example.recipeapp.Models.InstructionsResponse;
 import com.example.recipeapp.Models.RecipeDetailsResponse;
 import com.example.recipeapp.Models.SimilarRecipeResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,16 +51,18 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     int id;
     TextView textView_meal_name, textView_meal_source, textView_meal_summary, textView_similar_title, textView_similar_serving;
     ImageView imageView_meal_image;
-    RecyclerView recycler_meal_ingredients, recycler_meal_similar;
+    RecyclerView recycler_meal_ingredients, recycler_meal_similar, recycler_meal_instructions;;
     ProgressDialog dialog;
     IngredientsAdapter ingredientsAdapter;
     SimilarRecipeAdapter similarRecipeAdapter;
+    InstructionsAdapter instructionsAdapter;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_recipe_details);
         trial = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
@@ -69,6 +76,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         RequestManager manager = new RequestManager(getApplicationContext());
         manager.getRecipeDetails(recipeDetailsListener, id);
         manager.getSimilarRecipes(similarRecipesListener, id);
+        manager.getInstructions(instructionsListener,id);
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Details...");
         dialog.show();
@@ -83,6 +91,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         imageView_meal_image = findViewById(R.id.imageView_meal_image);
         recycler_meal_ingredients = findViewById(R.id.recycler_meal_ingredients);
         recycler_meal_similar = findViewById(R.id.recycler_meal_similar);
+        recycler_meal_instructions = findViewById(R.id.recycler_meal_instructions);
     }
 
     private final RecipeDetailsListener recipeDetailsListener = new RecipeDetailsListener() {
@@ -130,6 +139,21 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             Intent intent = new Intent(RecipeDetailsActivity.this, RecipeDetailsActivity.class);
             intent.putExtra("id", id);
             startActivity(intent);
+        }
+    };
+
+    private final InstructionsListener instructionsListener = new InstructionsListener() {
+        @Override
+        public void didFetch(List<InstructionsResponse> response, String message) {
+            recycler_meal_instructions.setHasFixedSize(true);
+            recycler_meal_instructions.setLayoutManager(new LinearLayoutManager(RecipeDetailsActivity.this, LinearLayoutManager.VERTICAL, false));
+            instructionsAdapter = new InstructionsAdapter(RecipeDetailsActivity.this, response);
+            recycler_meal_instructions.setAdapter(instructionsAdapter);
+        }
+
+        @Override
+        public void didError(String message) {
+            // Handle error
         }
     };
     public void Bookmark(View v) {

@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             tools:ignore="HardcodedText">
         </TextView>
-        <androidx.cardview.widget.CardView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_instructions_steps"
             android:layout_margin="4dp"
             android:layout_width="match_parent"

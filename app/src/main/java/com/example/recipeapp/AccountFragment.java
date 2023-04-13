@@ -76,7 +76,7 @@ public class AccountFragment extends Fragment {
     private RandomRecipeAdapter randomRecipeAdapter;
     private RecyclerView recyclerView;
     private final List<String> tags = new ArrayList<>();
-    List<Integer> IDS = new ArrayList<>();
+    private final List<Integer> IDS = new ArrayList<>();
     List<Integer> bookmarks;
     List<RandomRecipe> recipeList;
     TextView txt_welcome;
@@ -123,63 +123,60 @@ public class AccountFragment extends Fragment {
 
 
         recipeList = new ArrayList<>();
-        db.collection("Accounts")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//        db.collection("Accounts")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d("TAG", document.getId() + " => " + document.getData().get("Bookmarks"));
+//                                bookmarks = (List<Integer>) document.get("Bookmarks");
+//                            }
+//
+//                            Log.d("Finally",bookmarks.get(0)+"");
+//                            IDS = bookmarks;
+//                            Log.d("TAG", IDS.size()+" lolol");
+//                            for(int i = 0; i < IDS.size(); i++) {
+//                            Log.d("TAG", "in fetch woow");
+//                                RandomRecipe randomRecipeObj = new RandomRecipe(); // create new instance for each iteration
+//                                manager.getRecipeDetails(new RecipeDetailsListener() {
+//                                    @Override
+//                                    public void didFetch(RecipeDetailsResponse response, String message) {
+//                                        randomRecipeObj.id = response.id;
+//                                        randomRecipeObj.image = response.image;
+//                                        randomRecipeObj.imageType = response.imageType;
+//                                        randomRecipeObj.title = response.title;
+//                                        randomRecipeObj.servings = response.servings;
+//                                        randomRecipeObj.readyInMinutes = response.readyInMinutes;
+//                                        recipeList.add(randomRecipeObj);
+//
+//                                        if(recipeList.size() == IDS.size()) {
+//                                            // all recipe details fetched, update recycler view
+//                                            recyclerView = requireView().findViewById(R.id.bookmark_rv);
+//                                            recyclerView.setHasFixedSize(true);
+//                                            recyclerView.setLayoutManager(new GridLayoutManager(requireActivity().getApplicationContext(), 1));
+//                                            randomRecipeAdapter = new RandomRecipeAdapter(requireActivity().getApplicationContext(), recipeList, recipeClickListener());
+//                                            recyclerView.setAdapter(randomRecipeAdapter);
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void didError(String message) {
+//                                        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }, IDS.get(i));
+//                            }
+//                        } else {
+//                            Log.w("TAG", "Error getting documents.", task.getException());
+//                        }
+//                    }
+//                });
 
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("TAG", document.getId() + " => " + document.getData().get("Bookmarks"));
-                                bookmarks = (List<Integer>) document.get("Bookmarks");
-                            }
-
-                            Log.d("Finally",bookmarks.get(0)+"");
-                            IDS = bookmarks;
-                            Log.d("TAG", IDS.size()+" lolol");
-                            for(int i = 0; i < IDS.size(); i++) {
-                            Log.d("TAG", "in fetch woow");
-                                RandomRecipe randomRecipeObj = new RandomRecipe(); // create new instance for each iteration
-                                manager.getRecipeDetails(new RecipeDetailsListener() {
-                                    @Override
-                                    public void didFetch(RecipeDetailsResponse response, String message) {
-                                        randomRecipeObj.id = response.id;
-                                        randomRecipeObj.image = response.image;
-                                        randomRecipeObj.imageType = response.imageType;
-                                        randomRecipeObj.title = response.title;
-                                        randomRecipeObj.servings = response.servings;
-                                        randomRecipeObj.readyInMinutes = response.readyInMinutes;
-                                        recipeList.add(randomRecipeObj);
-
-                                        if(recipeList.size() == IDS.size()) {
-                                            // all recipe details fetched, update recycler view
-                                            recyclerView = requireView().findViewById(R.id.bookmark_rv);
-                                            recyclerView.setHasFixedSize(true);
-                                            recyclerView.setLayoutManager(new GridLayoutManager(requireActivity().getApplicationContext(), 1));
-                                            randomRecipeAdapter = new RandomRecipeAdapter(requireActivity().getApplicationContext(), recipeList, recipeClickListener());
-                                            recyclerView.setAdapter(randomRecipeAdapter);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void didError(String message) {
-                                        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                                    }
-                                }, IDS.get(i));
-                            }
-                        } else {
-                            Log.w("TAG", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
 
 
 
-//        IDS.add(638488);
-//        IDS.add(652417);
-//        IDS.add(715391);
-// get ID list from firebase
 
         return view;
     }
@@ -189,28 +186,28 @@ public class AccountFragment extends Fragment {
             // handle click on recipe
         };
     }
-    public void get(){
-        db.collection("Accounts")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("TAG", document.getId() + " => " + document.getData().get("Bookmarks"));
-                                bookmarks = (List<Integer>) document.get("Bookmarks");
-                            }
-                            Log.d("Finally",bookmarks.get(0)+"");
-                            IDS = bookmarks;
-                            Log.d("TAG", IDS.size()+" lolol");
-                        } else {
-                            Log.w("TAG", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-
-    }
+//    public void get(){
+//        db.collection("Accounts")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d("TAG", document.getId() + " => " + document.getData().get("Bookmarks"));
+//                                bookmarks = (List<Integer>) document.get("Bookmarks");
+//                            }
+//                            Log.d("Finally",bookmarks.get(0)+"");
+//                            IDS = bookmarks;
+//                            Log.d("TAG", IDS.size()+" lolol");
+//                        } else {
+//                            Log.w("TAG", "Error getting documents.", task.getException());
+//                        }
+//                    }
+//                });
+//
+//    }
 
 
 }
