@@ -14,7 +14,8 @@
             android:key="auto_update"
             android:icon="@drawable/settings"
             android:title="Auto Update"
-            android:summary="Automatically update the app"
+            android:summaryOn="Automatically update the app"
+            android:summaryOff="App is updated manually"
             android:defaultValue="true"/>
 
         <!-- Notifications Checkbox Preference -->
@@ -23,17 +24,18 @@
             android:key="notifications"
             android:icon="@drawable/bell"
             android:title="Notifications"
-            android:summary="Enable or disable notifications"
+            android:summaryOn="You will receive notifications"
+            android:summaryOff="You will not receive notifications"
             android:defaultValue="true"/>
 
         <!-- Dark Mode Checkbox Preference -->
         <CheckBoxPreference
             app:iconSpaceReserved="true"
-            android:key="dark_mode"
+            android:key="darkMode"
             android:title="Dark Mode (Beta)"
-            android:summaryOn="Enabled"
+            android:summaryOn="Dark Mode Enabled"
             android:icon="@drawable/moon"
-            android:summaryOff="Disabled"
+            android:summaryOff="Dark Mode Disabled"
             android:defaultValue="false"/>
 
         <!-- Change Email Preference -->
