@@ -54,24 +54,27 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseApp.initializeApp(this);
+
         setContentView(R.layout.activity_recipe_details);
         findViews();
+        dbHelper db = new dbHelper(getApplicationContext());
         trial = new ArrayList<>();
+
+//        id = Integer.parseInt(getIntent().getStringExtra("id"));
+//        id = Integer.parseInt(getIntent().getStringExtra("id"));
+//        id = getIntent().getIntExtra("id", 0);
+        //Use this the above cause errors
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String email = sp.getString("email", "");
+        id = Integer.valueOf(getIntent().getStringExtra("id"));
         bookmarkIcon = findViewById(R.id.bookmark);
-        bookmarked = false;
+        bookmarked = db.isBookmarked(id,email);
         if(!bookmarked){
             bookmarkIcon.setImageResource(R.drawable.emptybookmark);
         }
         else {
             bookmarkIcon.setImageResource(R.drawable.bookmark);
         }
-
-//        id = Integer.parseInt(getIntent().getStringExtra("id"));
-//        id = Integer.parseInt(getIntent().getStringExtra("id"));
-//        id = getIntent().getIntExtra("id", 0);
-        //Use this the above cause errors
-        id = Integer.valueOf(getIntent().getStringExtra("id"));
         RequestManager manager = new RequestManager(getApplicationContext());
         manager.getRecipeDetails(recipeDetailsListener, id);
         manager.getSimilarRecipes(similarRecipesListener, id);
@@ -183,22 +186,26 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
     };
     public void Bookmark(View v) {
-        Toast.makeText(this, "CLICKED BOOKMARK" + id, Toast.LENGTH_LONG).show();
-
-        if(!bookmarked){
-            bookmarkIcon.setImageResource(R.drawable.bookmark);
-            bookmarked = true;
-        }
-        else {
-            bookmarkIcon.setImageResource(R.drawable.emptybookmark);
-            bookmarked = false;
-        }
-        // Retrieve the current user's document from Firebase
-        //DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
         dbHelper db = new dbHelper(getApplicationContext());
         SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         String email = sp.getString("email", "");
-        db.addBookmark(id,email);
+
+        if(!bookmarked){
+            if(!db.areBookmarksFull(email)) {
+                bookmarkIcon.setImageResource(R.drawable.bookmark);
+                db.addBookmark(id, email);
+            }
+            else {
+                Toast.makeText(this, "Cannot add more than 5 bookmarks!",Toast.LENGTH_LONG).show();
+            }
+        }
+
+        else {
+            bookmarkIcon.setImageResource(R.drawable.emptybookmark);
+            db.removeBookmark(id,email);
+        }
+        // Retrieve the current user's document from Firebase
+        //DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
 
 
     }

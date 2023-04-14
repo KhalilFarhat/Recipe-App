@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">CookBook</string>
     <string name="cookbook">CookBook</string>
-    <string name="api_key">a41c27d9934145e3a459493710afbb8d</string>
+<!--    <string name="api_key">a41c27d9934145e3a459493710afbb8d</string>-->
 <!--    <string name="api_key">fc280aba16db4aac9fd7c738629651cc</string>-->
+<!--    <string name="api_key">d159a00689f5406daec692134f92271c</string>-->
+    <string name="api_key">6f69699a8f7346e2891ddc971ed43cd8</string>
+
     <string-array name="tags">
         <item>Main course</item>
         <item>Side dish</item>

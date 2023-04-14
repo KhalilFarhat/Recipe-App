@@ -89,13 +89,12 @@ public class SearchFragment extends Fragment {
             return new RecipeClickListener() {
                 @Override
                 public void onRecipeClicked(String id) {
-//                    Toast.makeText(requireActivity(), id, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(requireActivity(), RecipeDetailsActivity.class).putExtra("id", id));
                 }
             };
         }
 
-        //
+
         @Override
         public void didError(String message) {
             Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();

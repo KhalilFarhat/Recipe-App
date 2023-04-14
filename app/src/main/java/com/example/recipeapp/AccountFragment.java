@@ -43,15 +43,9 @@ public class AccountFragment extends Fragment {
     private RequestManager manager;
     private RandomRecipeAdapter randomRecipeAdapter;
     private RecyclerView recyclerView;
-    private final List<String> tags = new ArrayList<>();
-//    List<Integer> IDS;
+
     List<RandomRecipe> recipeList;
-    dbHelper myDB;
-    TextView txt_welcome;
-    List<Integer> timelist;
-    TextView txtview;
     Button SignOutBtn;
-    RandomRecipe randomrecipe_obj;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -65,12 +59,10 @@ public class AccountFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         RequestManager manager = new RequestManager(getActivity().getApplicationContext());
-//        IDS = new ArrayList<>();
-        recipeList = new ArrayList<>();
-        dbHelper db = new dbHelper(getContext());
+
+
         SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        String email = sp.getString("email", "");
-        ArrayList<Integer> IDS = db.getBookmarks(email);
+
         SignOutBtn = view.findViewById(R.id.SignOutBtn);
         SignOutBtn.setOnClickListener(view1 -> {
             SharedPreferences.Editor editor = sp.edit();
@@ -78,17 +70,25 @@ public class AccountFragment extends Fragment {
             editor.putBoolean("IsSignedIn", false);
             editor.commit();
             startActivity(new Intent(getActivity(),WelcomeActivity.class));
-
         });
-//        ArrayList<Integer> IDS = new ArrayList<>();
-//        IDS.add(716429);
-//        IDS.add(638488);
-//        IDS.add(652417);
-//        IDS.add(715391);
-        IDS.removeAll(Collections.singleton(0));
-        Toast.makeText(getActivity().getApplicationContext(), IDS.size()+"", Toast.LENGTH_SHORT).show();
-        for(int i = 0; i < IDS.size(); i++) {
 
+        return view;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        RequestManager manager = new RequestManager(getActivity().getApplicationContext());
+
+        Toast.makeText(getActivity().getApplicationContext(), "CALLED ON RESUME", Toast.LENGTH_SHORT).show();
+        recipeList = new ArrayList<>();
+            dbHelper db = new dbHelper(getContext());
+            SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+            String email = sp.getString("email", "");
+            ArrayList<Integer> IDS = db.getBookmarks(email);
+            IDS.removeAll(Collections.singleton(0));
+            Toast.makeText(getActivity().getApplicationContext(), IDS.size() + "", Toast.LENGTH_SHORT).show();
+
+            for (int i = 0; i < IDS.size(); i++) {
                 RandomRecipe randomRecipeObj = new RandomRecipe(); // create new instance for each iteration
                 manager.getRecipeDetails(new RecipeDetailsListener() {
                     @Override
@@ -100,7 +100,6 @@ public class AccountFragment extends Fragment {
                         randomRecipeObj.servings = response.servings;
                         randomRecipeObj.readyInMinutes = response.readyInMinutes;
                         recipeList.add(randomRecipeObj);
-
                         if (recipeList.size() == IDS.size()) {
                             // all recipe details fetched, update recycler view
                             recyclerView = requireView().findViewById(R.id.bookmark_rv);
@@ -113,20 +112,13 @@ public class AccountFragment extends Fragment {
 
                     @Override
                     public void didError(String message) {
-                        Toast.makeText(getActivity().getApplicationContext(), "message", Toast.LENGTH_SHORT).show();
                     }
                 }, IDS.get(i));
             }
+        }
 
-        txtview = view.findViewById(R.id.textView8);
-//        Toast.makeText(getActivity().getApplicationContext(), recipeList.size() + "", Toast.LENGTH_SHORT).show();
-
-        return view;
-    }
     private RecipeClickListener recipeClickListener() {
-        return recipeId -> {
-            // handle click on recipe
-        };
+        return id -> startActivity(new Intent(requireActivity(), RecipeDetailsActivity.class).putExtra("id", id));
     }
 
 }
