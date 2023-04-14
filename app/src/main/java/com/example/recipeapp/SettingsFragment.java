@@ -2,7 +2,10 @@ package com.example.recipeapp;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.text.LineBreaker;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.text.Layout;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
@@ -69,6 +73,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 // TODO: Implement auto-update functionality
             }
             return true;
+        });
+
+        Preference SignOut = findPreference("sign_out");
+        SignOut.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(@NonNull Preference preference) {
+                SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("email", "");
+                editor.putBoolean("IsSignedIn", false);
+                editor.commit();
+                startActivity(new Intent(getActivity(),WelcomeActivity.class));
+                return true;
+            }
         });
     }
 

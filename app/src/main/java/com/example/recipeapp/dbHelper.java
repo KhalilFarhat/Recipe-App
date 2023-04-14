@@ -132,7 +132,6 @@ public class dbHelper extends SQLiteOpenHelper {
     public void removeBookmark(int bm, String email){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{email});
         cursor.moveToFirst();
@@ -189,5 +188,22 @@ public class dbHelper extends SQLiteOpenHelper {
                 return false;
         }
         return true;
+    }
+    public boolean changePassword(String email, String newPassword){
+        if(newPassword.length()<8) {
+            return false;
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+        cursor.moveToFirst();
+        cv.put(COLUMN_PASSWORD, newPassword);
+        db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});
+        return true;
+    }
+    public void deleteAccount(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_EMAIL + " = ?", new String[]{email});
     }
 }
