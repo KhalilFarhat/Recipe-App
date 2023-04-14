@@ -62,29 +62,32 @@
 
             <TextView
                 android:id="@+id/textView_meal_name"
-                android:text="Recipe Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:padding="6dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="20dp"
+                android:fontFamily="@font/poppinsblack"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="Recipe Name"
                 android:textColor="@color/black"
-                tools:text="Recipe Name"
-                tools:ignore="HardcodedText" />
-                <TextView
-                    android:id="@+id/textView_meal_source"
-                    android:text="Source"
-                    android:textStyle="italic"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:ignore="HardcodedText,SmallSp" />
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText"
+                tools:text="Recipe Name" />
+
+            <TextView
+                android:id="@+id/textView_meal_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsblack"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="Source"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="italic"
+                tools:ignore="HardcodedText,SmallSp" />
 
             <ImageView
                 android:id="@+id/imageView_meal_image"
@@ -99,15 +102,16 @@
 
             <TextView
                 android:id="@+id/textView_meal_summary"
-                android:textSize="14sp"
-                android:padding="8dp"
-                android:textStyle="normal"
-                android:gravity="center"
-                android:maxLines="5"
-                android:textColor="@color/black"
-                android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/poppinsblack"
+                android:gravity="center"
+                android:maxLines="5"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 tools:ignore="HardcodedText" />
 
 
@@ -117,15 +121,17 @@
                 android:background="@drawable/rounded_background"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
+
             <TextView
-                android:text="Similar Recipes"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:padding="8dp"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsblack"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Similar Recipes"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -133,15 +139,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
+
             <TextView
-                android:text="Ingredients"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:padding="8dp"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsblack"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Ingredients"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
             <androidx.recyclerview.widget.RecyclerView

@@ -97,7 +97,7 @@ public class SearchFragment extends Fragment {
 
         @Override
         public void didError(String message) {
-            Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(), "wow", Toast.LENGTH_LONG).show();
         }
     };
     private final AdapterView.OnItemSelectedListener spinnerSelectedListener = new AdapterView.OnItemSelectedListener() {

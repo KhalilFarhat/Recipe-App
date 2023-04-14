@@ -7,8 +7,10 @@ import android.graphics.text.LineBreaker;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Layout;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -21,6 +23,46 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
+        Preference changePassPreference = findPreference("change_password");
+        changePassPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                // Create a new instance of the AlertDialog.Builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+
+                // Inflate the layout for the dialog box
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.change_password_dialog, null);
+                builder.setView(view);
+
+                // Set up the cancel button to dismiss the dialog box
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                // Set up the save button to save the new password
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Save the new password
+                        EditText passwordEditTextOld = view.findViewById(R.id.password_edit_text_old);
+                        EditText passwordEditTextNew = view.findViewById(R.id.password_edit_text_new);
+
+                        String OldPassword = passwordEditTextOld.getText().toString();
+                        String NewPassword = passwordEditTextNew.getText().toString();
+
+                    }
+                });
+
+                // Create and show the dialog box
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });
 
         // Get the CheckBoxPreference object for the dark mode setting
         CheckBoxPreference darkModePref = findPreference("dark_mode");
