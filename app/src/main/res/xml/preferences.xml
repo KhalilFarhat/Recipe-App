@@ -31,7 +31,7 @@
         <!-- Dark Mode Checkbox Preference -->
         <CheckBoxPreference
             app:iconSpaceReserved="true"
-            android:key="darkMode"
+            android:key="dark_mode"
             android:title="Dark Mode (Beta)"
             android:summaryOn="Dark Mode Enabled"
             android:icon="@drawable/moon"
