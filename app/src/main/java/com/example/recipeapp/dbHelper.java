@@ -126,7 +126,7 @@ public class dbHelper extends SQLiteOpenHelper {
             cv.put(BOOKMARK5, bm);
         else
             Toast.makeText(context, "Cannot add more than 5 favorites.", Toast.LENGTH_SHORT).show();
-        db.insert(TABLE_NAME, null, cv);
+        db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});
     }
     public void removeBookmark(int bm, String email){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -151,6 +151,7 @@ public class dbHelper extends SQLiteOpenHelper {
             cv.put(BOOKMARK5, 0);
         else
             Toast.makeText(context, "BRUH", Toast.LENGTH_SHORT).show();
+        db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});
     }
     public ArrayList<Integer> getBookmarks(String email){
         ArrayList<Integer> Favorites = new ArrayList<>();
