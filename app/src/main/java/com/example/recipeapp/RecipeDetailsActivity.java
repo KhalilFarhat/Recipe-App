@@ -48,17 +48,24 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     IngredientsAdapter ingredientsAdapter;
     SimilarRecipeAdapter similarRecipeAdapter;
     InstructionsAdapter instructionsAdapter;
-
-
+    ImageView bookmarkIcon;
+    Boolean bookmarked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_recipe_details);
-        trial = new ArrayList<>();
-
         findViews();
+        trial = new ArrayList<>();
+        bookmarkIcon = findViewById(R.id.bookmark);
+        bookmarked = false;
+        if(!bookmarked){
+            bookmarkIcon.setImageResource(R.drawable.emptybookmark);
+        }
+        else {
+            bookmarkIcon.setImageResource(R.drawable.bookmark);
+        }
 
 //        id = Integer.parseInt(getIntent().getStringExtra("id"));
 //        id = Integer.parseInt(getIntent().getStringExtra("id"));
@@ -72,7 +79,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Details...");
         dialog.show();
-
     }
     private String getPlainTextSummary(String htmlSummary) {
         // Replace <b> tags with <strong> tags
@@ -179,6 +185,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     public void Bookmark(View v) {
         Toast.makeText(this, "CLICKED BOOKMARK" + id, Toast.LENGTH_LONG).show();
 
+        if(!bookmarked){
+            bookmarkIcon.setImageResource(R.drawable.bookmark);
+            bookmarked = true;
+        }
+        else {
+            bookmarkIcon.setImageResource(R.drawable.emptybookmark);
+            bookmarked = false;
+        }
         // Retrieve the current user's document from Firebase
         //DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
         dbHelper db = new dbHelper(getApplicationContext());

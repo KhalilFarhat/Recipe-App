@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,12 +52,13 @@ public class AccountFragment extends Fragment {
     TextView txtview;
     Button SignOutBtn;
     RandomRecipe randomrecipe_obj;
+
     public AccountFragment() {
         // Required empty public constructor
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,8 +78,8 @@ public class AccountFragment extends Fragment {
             editor.putBoolean("IsSignedIn", false);
             editor.commit();
             startActivity(new Intent(getActivity(),WelcomeActivity.class));
-        });
 
+        });
 //        ArrayList<Integer> IDS = new ArrayList<>();
 //        IDS.add(716429);
 //        IDS.add(638488);
