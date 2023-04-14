@@ -20,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="2dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintEnd_toStartOf="@+id/imageView4"
@@ -45,7 +45,7 @@
             app:layout_constraintStart_toEndOf="@+id/toolbar"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bookmark"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck,UsingOnClickInXml" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,6 +55,7 @@
         <LinearLayout
             android:orientation ="vertical"
             android:gravity="center"
+            android:background="@drawable/rounded_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="UselessLeaf">
@@ -64,11 +65,11 @@
                 android:text="Recipe Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:padding="8dp"
-                android:layout_marginTop="20dp"
+                android:padding="6dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/black"
                 tools:text="Recipe Name"
@@ -78,28 +79,30 @@
                     android:text="Source"
                     android:textStyle="italic"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:gravity="center"
-                    android:padding="8dp"
+                    android:padding="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:ignore="HardcodedText" />
+                    tools:ignore="HardcodedText,SmallSp" />
 
             <ImageView
                 android:id="@+id/imageView_meal_image"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="221dp"
-
                 android:layout_margin="8dp"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:background="@drawable/rounded_background"
                 tools:ignore="ContentDescription" />
+
 
             <TextView
                 android:id="@+id/textView_meal_summary"
-                android:text="Summary"
                 android:textSize="14sp"
                 android:padding="8dp"
                 android:textStyle="normal"
+                android:gravity="center"
                 android:maxLines="5"
                 android:textColor="@color/black"
                 android:layout_margin="8dp"
@@ -107,9 +110,11 @@
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_meal_instructions"
                 android:layout_width="match_parent"
+                android:background="@drawable/rounded_background"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
             <TextView

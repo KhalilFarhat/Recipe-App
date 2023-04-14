@@ -4,10 +4,11 @@
 
     <!-- User Settings Category -->
     <PreferenceCategory
-        android:title="User Settings"
+        android:title="@string/user_settings_title"
         app:iconSpaceReserved="false">
 
-        <!-- Auto Update Checkbox Preference -->
+
+    <!-- Auto Update Checkbox Preference -->
         <CheckBoxPreference
             app:iconSpaceReserved="true"
             android:key="auto_update"
@@ -40,7 +41,7 @@
 
     <!-- App Information Category -->
     <PreferenceCategory
-        android:title="App Information"
+        android:title="@string/app_information"
         app:iconSpaceReserved="false">
 
         <!-- Privacy Policy Preference -->
