@@ -31,13 +31,14 @@ import com.example.recipeapp.Models.InstructionsResponse;
 import com.example.recipeapp.Models.RecipeDetailsResponse;
 import com.example.recipeapp.Models.SimilarRecipeResponse;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
-    //FirebaseFirestore db;
+
     List<Integer> trial;
     int id;
     TextView textView_meal_name, textView_meal_source, textView_meal_summary, textView_similar_title, textView_similar_serving;
@@ -56,7 +57,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_recipe_details);
         trial = new ArrayList<>();
-        //db = FirebaseFirestore.getInstance();
+
         findViews();
 
 //        id = Integer.parseInt(getIntent().getStringExtra("id"));
@@ -177,15 +178,18 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     };
     public void Bookmark(View v) {
         Toast.makeText(this, "CLICKED BOOKMARK" + id, Toast.LENGTH_LONG).show();
-        String username = "TrialID";
+
         // Retrieve the current user's document from Firebase
         //DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
         dbHelper db = new dbHelper(getApplicationContext());
         SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         String email = sp.getString("email", "");
-        ArrayList<Integer> Favorites = db.getBookmarks(email);
-        Log.d("omar",Favorites.size() + "");
-        }
+        db.addBookmark(id,email);
+
+
+    }
+
+
 
 }
 

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">CookBook</string>
     <string name="cookbook">CookBook</string>
-    <string name="api_key"> f23efefd18814b12a3409aa7bf129f51</string>
+    <string name="api_key">a41c27d9934145e3a459493710afbb8d</string>
     <!--<string name="api_key">fc280aba16db4aac9fd7c738629651cc</string>-->
     <string-array name="tags">
-        <item>Main Course</item>
+        <item>Main course</item>
         <item>Side dish</item>
         <item>Dessert</item>
         <item>Appetizer</item>
@@ -15,7 +15,7 @@
         <item>Beverage</item>
         <item>Sauce</item>
         <item>Marinade</item>
-        <item>FingerFood</item>
+        <item>Fingerfood</item>
         <item>Snack</item>
         <item>Drink</item>
     </string-array>
@@ -31,5 +31,4 @@
     <string name="app_version">Version 1.0.0</string>
     <string name="user_settings_title"><b>User Settings</b></string>
     <string name="app_information"><b>App Information</b></string>
-
 </resources>
