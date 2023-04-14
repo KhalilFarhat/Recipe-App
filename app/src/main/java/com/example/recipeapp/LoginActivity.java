@@ -32,11 +32,13 @@ public class LoginActivity extends AppCompatActivity {
 
         show_hide_password.setOnClickListener(view -> {
             if(val ==1){
+                //input_password.set("false");
                 input_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 show_hide_password.setImageResource(R.drawable.openeye);
                 val = 0;
             }
             else if(val ==0){
+                //input_password.setPassword("true");
                 input_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 show_hide_password.setImageResource(R.drawable.closedeye);
                 val = 1;
@@ -55,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please insert password", Toast.LENGTH_SHORT).show();
                 }
                 else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(LoginActivity.this, "Please insert email properly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Email format is invalid", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     if (myDB.isEmailAlreadyExist(email)) {
@@ -70,10 +72,10 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else {
-                            Toast.makeText(LoginActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                         }
                     }else {
-                        Toast.makeText(LoginActivity.this, "Incorrect Email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
