@@ -168,7 +168,7 @@ public class dbHelper extends SQLiteOpenHelper {
         Favorites.removeAll(Collections.singleton(0));
         return Favorites;
     }
-    public boolean IsBookmarked(int bm, String email){
+    public boolean isBookmarked(int bm, String email){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{email});
@@ -178,5 +178,16 @@ public class dbHelper extends SQLiteOpenHelper {
                 return true;
         }
         return false;
+    }
+    public boolean areBookmarksFull(String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+        cursor.moveToFirst();
+        for(int i = 4; i < 9; i++){
+            if(cursor.getInt(i) == 0)
+                return false;
+        }
+        return true;
     }
 }
