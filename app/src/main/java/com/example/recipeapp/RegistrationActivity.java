@@ -21,7 +21,6 @@ public class RegistrationActivity extends AppCompatActivity {
     Button register_btn;
     ImageView show_hide_password;
     dbHelper myDB;
-    //SharedPreferences sp = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
     int val = 1;
 
     @SuppressLint("MissingInflatedId")
@@ -60,7 +59,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             input_name.getText().toString();
             if(input_name.getText().toString().isEmpty() || name.isEmpty()){
-                Toast.makeText(RegistrationActivity.this, "Please insert name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationActivity.this, "Please insert username", Toast.LENGTH_SHORT).show();
             }
             else {
                 input_email.getText().toString();
@@ -73,23 +72,25 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast.makeText(RegistrationActivity.this, "Please insert password", Toast.LENGTH_SHORT).show();
                     }
                     else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                        Toast.makeText(RegistrationActivity.this, "Please insert email properly", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistrationActivity.this, "Email format is invalid", Toast.LENGTH_SHORT).show();
                     }
                     else if(password.length()<8) {
-                            Toast.makeText(RegistrationActivity.this, "The password should be more than 8 characters", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, "Password should be more than 8 characters", Toast.LENGTH_SHORT).show();
                     }
-                    else if(name.length()<8) {
-                        Toast.makeText(RegistrationActivity.this, "The name should be more than 8 characters", Toast.LENGTH_SHORT).show();
+                    else if(name.length()<2) {
+                        Toast.makeText(RegistrationActivity.this, "Username is too short", Toast.LENGTH_SHORT).show();
                     }
                     else{
                         if (myDB.isEmailAlreadyExist(email)) {
-                            Toast.makeText(RegistrationActivity.this, "This email is already used!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, "An account associated with this email already exists", Toast.LENGTH_SHORT).show();
                         }else {
                             myDB.addUser(name, email, password);
                             Intent intent= new Intent(RegistrationActivity.this, MainActivity.class);
-                            //SharedPreferences.Editor editor = sp.edit();
-                            //editor.putBoolean("IsSignedIn", true).commit();
-                            //editor.putString("email", email).commit();
+                            SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putBoolean("IsSignedIn", true);
+                            editor.putString("email", email);
+                            editor.commit();
                             startActivity(intent);
                         }
                     }
