@@ -13,4 +13,5 @@
     <color name="bottom_navigation_item_text_color">#FFFFFF</color>
     <color name="dark_grey">#333333</color>
     <color name="light_grey">#DAD8D8</color>
+    <color name="light_gray">#CCCCCC</color>
 </resources>

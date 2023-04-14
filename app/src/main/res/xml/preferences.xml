@@ -4,16 +4,18 @@
 
     <!-- User Settings Category -->
     <PreferenceCategory
-        android:title="User Settings"
+        android:title="@string/user_settings_title"
         app:iconSpaceReserved="false">
 
-        <!-- Auto Update Checkbox Preference -->
+
+    <!-- Auto Update Checkbox Preference -->
         <CheckBoxPreference
             app:iconSpaceReserved="true"
             android:key="auto_update"
             android:icon="@drawable/settings"
             android:title="Auto Update"
-            android:summary="Automatically update the app"
+            android:summaryOn="Automatically update the app"
+            android:summaryOff="App is updated manually"
             android:defaultValue="true"/>
 
         <!-- Notifications Checkbox Preference -->
@@ -22,7 +24,8 @@
             android:key="notifications"
             android:icon="@drawable/bell"
             android:title="Notifications"
-            android:summary="Enable or disable notifications"
+            android:summaryOn="You will receive notifications"
+            android:summaryOff="You will not receive notifications"
             android:defaultValue="true"/>
 
         <!-- Dark Mode Checkbox Preference -->
@@ -30,17 +33,45 @@
             app:iconSpaceReserved="true"
             android:key="dark_mode"
             android:title="Dark Mode (Beta)"
-            android:summaryOn="Enabled"
+            android:summaryOn="Dark Mode Enabled"
             android:icon="@drawable/moon"
-            android:summaryOff="Disabled"
+            android:summaryOff="Dark Mode Disabled"
             android:defaultValue="false"/>
+
+        <!-- Change Email Preference -->
+        <Preference
+            android:title="Change Email"
+            android:icon="@drawable/email"
+            android:summary="Update your registered email address"
+            android:key="change_email"/>
+
+        <!-- Change Password Preference -->
+        <Preference
+            android:title="Change Password"
+            android:icon="@drawable/password"
+            android:summary="Update your account password"
+            android:key="change_password"/>
+
+        <!-- Sign Out Preference -->
+        <Preference
+            android:title="Sign Out"
+            android:icon="@drawable/sign_out"
+            android:summary="Log out of your account"
+            android:key="sign_out"/>
+
+        <!-- Delete Account Preference -->
+        <Preference
+            android:title="Delete Account"
+            android:icon="@drawable/delete"
+            android:summary="Permanently delete your account"
+            android:key="delete_account"/>
 
     </PreferenceCategory>
 
 
     <!-- App Information Category -->
     <PreferenceCategory
-        android:title="App Information"
+        android:title="@string/app_information"
         app:iconSpaceReserved="false">
 
         <!-- Privacy Policy Preference -->

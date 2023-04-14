@@ -1,58 +1,49 @@
 package com.example.recipeapp;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.recipeapp.Adapters.InstructionsAdapter;
-import com.example.recipeapp.Listeners.InstructionsListener;
-import com.example.recipeapp.Listeners.RecipeClickListener;
-
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.recipeapp.Adapters.IngredientsAdapter;
+import com.example.recipeapp.Adapters.InstructionsAdapter;
 import com.example.recipeapp.Adapters.SimilarRecipeAdapter;
+import com.example.recipeapp.Listeners.InstructionsListener;
 import com.example.recipeapp.Listeners.RecipeClickListener;
 import com.example.recipeapp.Listeners.RecipeDetailsListener;
 import com.example.recipeapp.Listeners.SimilarRecipesListener;
 import com.example.recipeapp.Models.InstructionsResponse;
 import com.example.recipeapp.Models.RecipeDetailsResponse;
 import com.example.recipeapp.Models.SimilarRecipeResponse;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
-    //FirebaseFirestore db;
+
     List<Integer> trial;
     int id;
     TextView textView_meal_name, textView_meal_source, textView_meal_summary, textView_similar_title, textView_similar_serving;
     ImageView imageView_meal_image;
-    RecyclerView recycler_meal_ingredients, recycler_meal_similar, recycler_meal_instructions;;
+    RecyclerView recycler_meal_ingredients, recycler_meal_similar, recycler_meal_instructions;
     ProgressDialog dialog;
     IngredientsAdapter ingredientsAdapter;
     SimilarRecipeAdapter similarRecipeAdapter;
@@ -66,7 +57,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_recipe_details);
         trial = new ArrayList<>();
-        //db = FirebaseFirestore.getInstance();
+
         findViews();
 
 //        id = Integer.parseInt(getIntent().getStringExtra("id"));
@@ -83,6 +74,28 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         dialog.show();
 
     }
+    private String getPlainTextSummary(String htmlSummary) {
+        // Replace <b> tags with <strong> tags
+        String summaryWithStrongTags = htmlSummary.replace("<b>", "<strong>").replace("</b>", "</strong>");
+
+        // Convert HTML string to Spannable object
+        Spanned spannedSummary = HtmlCompat.fromHtml(summaryWithStrongTags, HtmlCompat.FROM_HTML_MODE_LEGACY);
+
+        // Remove <b> tags using SpannableStringBuilder
+        SpannableStringBuilder builder = new SpannableStringBuilder(spannedSummary);
+        StyleSpan[] styleSpans = builder.getSpans(0, builder.length(), StyleSpan.class);
+        for (StyleSpan styleSpan : styleSpans) {
+            if (styleSpan.getStyle() == Typeface.BOLD) {
+                int start = builder.getSpanStart(styleSpan);
+                int end = builder.getSpanEnd(styleSpan);
+                builder.removeSpan(styleSpan);
+                builder.setSpan(new StyleSpan(Typeface.NORMAL), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            }
+        }
+
+        // Return plain text String
+        return builder.toString();
+    }
 
 
     private void findViews() {
@@ -93,12 +106,18 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         recycler_meal_ingredients = findViewById(R.id.recycler_meal_ingredients);
         recycler_meal_similar = findViewById(R.id.recycler_meal_similar);
         recycler_meal_instructions = findViewById(R.id.recycler_meal_instructions);
+
     }
+
+
+
+
 
     private final RecipeDetailsListener recipeDetailsListener = new RecipeDetailsListener() {
         @Override
         public void didFetch(RecipeDetailsResponse response, String message) {
             dialog.dismiss();
+
             textView_meal_name.setText(response.title);
             textView_meal_source.setText(response.sourceUrl);
             textView_meal_summary.setText(response.summary);
@@ -129,7 +148,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         @Override
         public void didError(String errorMessage) {
             Toast.makeText(RecipeDetailsActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-            Log.d("ERORROOROR",errorMessage);
+            Log.d("Error",errorMessage);
         }
     };
 
@@ -159,15 +178,18 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     };
     public void Bookmark(View v) {
         Toast.makeText(this, "CLICKED BOOKMARK" + id, Toast.LENGTH_LONG).show();
-        String username = "TrialID";
+
         // Retrieve the current user's document from Firebase
         //DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
         dbHelper db = new dbHelper(getApplicationContext());
         SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         String email = sp.getString("email", "");
-        ArrayList<Integer> Favorites = db.getBookmarks(email);
-        Log.d("omar",Favorites.size() + "");
-        }
+        db.addBookmark(id,email);
+
+
+    }
+
+
 
 }
 

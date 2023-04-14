@@ -38,6 +38,10 @@
         <item name="android:listDivider">@android:color/black</item>
 
     </style>
+    <style name="PreferenceCategoryTitle" parent="android:TextAppearance">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
     <color name="red">#F44336</color>
     <color name="teal_200">#80CBC4</color>
