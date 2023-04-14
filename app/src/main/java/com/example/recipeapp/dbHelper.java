@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class dbHelper extends SQLiteOpenHelper {
 
@@ -164,6 +165,18 @@ public class dbHelper extends SQLiteOpenHelper {
         Favorites.add(cursor.getInt(6));
         Favorites.add(cursor.getInt(7));
         Favorites.add(cursor.getInt(8));
+        Favorites.removeAll(Collections.singleton(0));
         return Favorites;
+    }
+    public boolean IsBookmarked(int bm, String email){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+        cursor.moveToFirst();
+        for(int i = 4; i < 9; i++){
+            if(cursor.getInt(i) == bm)
+                return true;
+        }
+        return false;
     }
 }
