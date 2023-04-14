@@ -127,6 +127,7 @@ public class dbHelper extends SQLiteOpenHelper {
         else
             Toast.makeText(context, "Cannot add more than 5 favorites.", Toast.LENGTH_SHORT).show();
         db.insert(TABLE_NAME, null, cv);
+
     }
     public void removeBookmark(int bm, String email){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -163,6 +164,7 @@ public class dbHelper extends SQLiteOpenHelper {
         Favorites.add(cursor.getInt(6));
         Favorites.add(cursor.getInt(7));
         Favorites.add(cursor.getInt(8));
+        Log.d("WHAT",Favorites.get(0)+"");
         return Favorites;
     }
 }
