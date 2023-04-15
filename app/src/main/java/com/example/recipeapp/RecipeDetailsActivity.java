@@ -48,7 +48,6 @@ import java.util.List;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
-    List<Integer> trial;
     int id;
     TextView textView_meal_name, textView_meal_source, textView_meal_summary, textView_similar_title, textView_similar_serving;
     ImageView imageView_meal_image;
@@ -67,42 +66,17 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details);
         findViews();
         dbHelper db = new dbHelper(getApplicationContext());
-        trial = new ArrayList<>();
-
-//        id = Integer.parseInt(getIntent().getStringExtra("id"));
-//        id = Integer.parseInt(getIntent().getStringExtra("id"));
-//        id = getIntent().getIntExtra("id", 0);
-        //Use this the above cause errors
         SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         String email = sp.getString("email", "");
         id = Integer.valueOf(getIntent().getStringExtra("id"));
         bookmarkIcon = findViewById(R.id.bookmark);
         bookmarked = db.isBookmarked(id,email);
         if(!bookmarked){
-            bookmarkIcon.setImageResource(R.drawable.emptybookmark);
+            bookmarkIcon.setImageResource(R.drawable.bookmark_empty_new);
         }
         else {
-            bookmarkIcon.setImageResource(R.drawable.bookmark_added);
+            bookmarkIcon.setImageResource(R.drawable.bookmark_filled_new);
         }
-        // Add OnClickListener to bookmark icon
-        bookmarkIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bookmarked) {
-                    // Remove recipe from bookmarks
-                    db.removeBookmark(id, email);
-                    bookmarkIcon.setImageResource(R.drawable.emptybookmark);
-                    bookmarked = false;
-                    Toast.makeText(getApplicationContext(), "Recipe removed from bookmarks", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Add recipe to bookmarks
-                    db.addBookmark(id, email);
-                    bookmarkIcon.setImageResource(R.drawable.bookmark_added);
-                    bookmarked = true;
-                    Toast.makeText(getApplicationContext(), "Recipe added to bookmarks", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         RequestManager manager = new RequestManager(getApplicationContext());
         manager.getRecipeDetails(recipeDetailsListener, id);
         manager.getSimilarRecipes(similarRecipesListener, id);
@@ -111,28 +85,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         dialog.setTitle("Loading Details...");
         dialog.show();
     }
-    private String getPlainTextSummary(String htmlSummary) {
-        // Replace <b> tags with <strong> tags
-        String summaryWithStrongTags = htmlSummary.replace("<b>", "<strong>").replace("</b>", "</strong>");
 
-        // Convert HTML string to Spannable object
-        Spanned spannedSummary = HtmlCompat.fromHtml(summaryWithStrongTags, HtmlCompat.FROM_HTML_MODE_LEGACY);
-
-        // Remove <b> tags using SpannableStringBuilder
-        SpannableStringBuilder builder = new SpannableStringBuilder(spannedSummary);
-        StyleSpan[] styleSpans = builder.getSpans(0, builder.length(), StyleSpan.class);
-        for (StyleSpan styleSpan : styleSpans) {
-            if (styleSpan.getStyle() == Typeface.BOLD) {
-                int start = builder.getSpanStart(styleSpan);
-                int end = builder.getSpanEnd(styleSpan);
-                builder.removeSpan(styleSpan);
-                builder.setSpan(new StyleSpan(Typeface.NORMAL), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-            }
-        }
-
-        // Return plain text String
-        return builder.toString();
-    }
 
 
     private void findViews() {
@@ -163,48 +116,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             }
         });
         String mealSummaryHtml = textView_meal_summary.getText().toString();
-        String mealSummaryPlainText = Html.fromHtml(mealSummaryHtml, null, new HtmlTagHandler()).toString();
+
+        String mealSummaryPlainText = String.valueOf(HtmlCompat.fromHtml(mealSummaryHtml,HtmlCompat.FROM_HTML_MODE_LEGACY));
+
         textView_meal_summary.setText(mealSummaryPlainText);
 
     }
-    private static class HtmlTagHandler implements Html.TagHandler {
-        @Override
-        public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
-            if (!tag.equalsIgnoreCase("br")) {
-                // Remove all tags except for <br>
-                if (opening) {
-                    output.setSpan(new SpannableStringBuilder(), output.length(), output.length(), Spannable.SPAN_MARK_MARK);
-                } else {
-                    Object obj = getLast(output, SpannableStringBuilder.class);
-                    int start = output.getSpanStart(obj);
-                    int end = output.length();
-                    output.removeSpan(obj);
-                    if (start != end) {
-                        String strippedText = Html.fromHtml(output.subSequence(start, end).toString()).toString();
-                        output.replace(start, end, strippedText);
-                    }
-                }
-            }
-        }
-
-        private Object getLast(Editable text, Class<?> kind) {
-            Object[] objs = text.getSpans(0, text.length(), kind);
-
-            if (objs.length == 0) {
-                return null;
-            } else {
-                for (int i = objs.length; i > 0; i--) {
-                    if (text.getSpanFlags(objs[i - 1]) == Spannable.SPAN_MARK_MARK) {
-                        return objs[i - 1];
-                    }
-                }
-                return null;
-            }
-        }
-    }
-
-
-
 
 
 
@@ -271,29 +188,25 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             // Handle error
         }
     };
+
     public void Bookmark(View v) {
         dbHelper db = new dbHelper(getApplicationContext());
         SharedPreferences sp = getApplicationContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         String email = sp.getString("email", "");
-
+        bookmarked = db.isBookmarked(id,email);
         if(!bookmarked){
             if(!db.areBookmarksFull(email)) {
-                bookmarkIcon.setImageResource(R.drawable.bookmark_added);
+                bookmarkIcon.setImageResource(R.drawable.bookmark_filled_new);
                 db.addBookmark(id, email);
             }
             else {
                 Toast.makeText(this, "Cannot add more than 5 bookmarks!",Toast.LENGTH_LONG).show();
             }
         }
-
         else {
-            bookmarkIcon.setImageResource(R.drawable.emptybookmark);
+            bookmarkIcon.setImageResource(R.drawable.bookmark_empty_new);
             db.removeBookmark(id,email);
         }
-        // Retrieve the current user's document from Firebase
-        //DocumentReference userRef = db.collection("Accounts").document(username); //Document Path to be changed to username
-
-
     }
 
 

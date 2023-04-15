@@ -39,11 +39,11 @@ import java.util.List;
 
 public class AccountFragment extends Fragment {
 
-    private ProgressDialog dialog;
+
     private RequestManager manager;
     private RandomRecipeAdapter randomRecipeAdapter;
     private RecyclerView recyclerView;
-
+    ProgressDialog dialog;
     List<RandomRecipe> recipeList;
     Button SignOutBtn;
     TextView Welcome;
@@ -80,16 +80,22 @@ public class AccountFragment extends Fragment {
     public void onResume() {
         super.onResume();
         RequestManager manager = new RequestManager(getActivity().getApplicationContext());
-
+        dialog = new ProgressDialog(getContext());
+        dialog.setTitle("Loading Details...");
+        dialog.show();
         Toast.makeText(getActivity().getApplicationContext(), "CALLED ON RESUME", Toast.LENGTH_SHORT).show();
         recipeList = new ArrayList<>();
             dbHelper db = new dbHelper(getContext());
             SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
             String email = sp.getString("email", "");
             ArrayList<Integer> IDS = db.getBookmarks(email);
-            IDS.removeAll(Collections.singleton(0));
+            
             Toast.makeText(getActivity().getApplicationContext(), IDS.size() + "", Toast.LENGTH_SHORT).show();
-
+            if(IDS.size()==0){
+                recyclerView = requireView().findViewById(R.id.bookmark_rv);
+                recyclerView.setAdapter(null);
+                dialog.dismiss();
+            }
             for (int i = 0; i < IDS.size(); i++) {
                 RandomRecipe randomRecipeObj = new RandomRecipe(); // create new instance for each iteration
                 manager.getRecipeDetails(new RecipeDetailsListener() {
@@ -104,6 +110,7 @@ public class AccountFragment extends Fragment {
                         recipeList.add(randomRecipeObj);
                         if (recipeList.size() == IDS.size()) {
                             // all recipe details fetched, update recycler view
+                            dialog.dismiss();
                             recyclerView = requireView().findViewById(R.id.bookmark_rv);
                             recyclerView.setHasFixedSize(true);
                             recyclerView.setLayoutManager(new GridLayoutManager(requireActivity().getApplicationContext(), 1));
