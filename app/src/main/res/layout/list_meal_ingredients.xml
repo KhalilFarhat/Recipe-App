@@ -13,37 +13,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/textView_ingredients_quantity"
-            android:text = "1 pc"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/poppinsblack"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="4dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="1 pc"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             tools:ignore="HardcodedText" />
         <ImageView
             android:id="@+id/imageView_ingredients"
             android:scaleType="center"
             android:layout_width="80dp"
             android:layout_height="50dp"/>
+
         <TextView
             android:id="@+id/textView_ingredients_name"
-            android:text = "Chicken"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:padding="4dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/poppinsblack"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="4dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="Chicken"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -81,13 +81,14 @@ public class AccountFragment extends Fragment {
         super.onResume();
         RequestManager manager = new RequestManager(getActivity().getApplicationContext());
 
+        Toast.makeText(getActivity().getApplicationContext(), "CALLED ON RESUME", Toast.LENGTH_SHORT).show();
         recipeList = new ArrayList<>();
             dbHelper db = new dbHelper(getContext());
             SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
             String email = sp.getString("email", "");
             ArrayList<Integer> IDS = db.getBookmarks(email);
             IDS.removeAll(Collections.singleton(0));
-
+            Toast.makeText(getActivity().getApplicationContext(), IDS.size() + "", Toast.LENGTH_SHORT).show();
 
             for (int i = 0; i < IDS.size(); i++) {
                 RandomRecipe randomRecipeObj = new RandomRecipe(); // create new instance for each iteration
