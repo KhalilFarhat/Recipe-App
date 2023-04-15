@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class dbHelper extends SQLiteOpenHelper {
 
@@ -189,15 +190,16 @@ public class dbHelper extends SQLiteOpenHelper {
         }
         return true;
     }
-    public boolean changePassword(String email, String newPassword){
-        if(newPassword.length()<8) {
-            return false;
-        }
+    public boolean changePassword(String email, String oldPassword, String newPassword){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{email});
         cursor.moveToFirst();
+        if (!Objects.equals(oldPassword, cursor.getString(3))){
+            Toast.makeText(context, oldPassword, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, cursor.getString(3), Toast.LENGTH_SHORT).show();
+            return false;}
         cv.put(COLUMN_PASSWORD, newPassword);
         db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});
         return true;

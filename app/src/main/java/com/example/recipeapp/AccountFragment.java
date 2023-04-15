@@ -46,6 +46,7 @@ public class AccountFragment extends Fragment {
 
     List<RandomRecipe> recipeList;
     Button SignOutBtn;
+    TextView Welcome;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -59,10 +60,11 @@ public class AccountFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         RequestManager manager = new RequestManager(getActivity().getApplicationContext());
-
-
+        dbHelper db = new dbHelper(getContext());
         SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-
+        String email = sp.getString("email", "");
+        Welcome = view.findViewById(R.id.txt_Welcome);
+        Welcome.setText("Welcome, " + db.getUsername(email));
         SignOutBtn = view.findViewById(R.id.SignOutBtn);
         SignOutBtn.setOnClickListener(view1 -> {
             SharedPreferences.Editor editor = sp.edit();

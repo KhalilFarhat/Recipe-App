@@ -96,6 +96,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/poppinsblack"
         android:hint="@string/password"
+        android:inputType="textPassword"
         android:maxLength="25"
         android:maxLines="1"
         android:minHeight="48dp"
