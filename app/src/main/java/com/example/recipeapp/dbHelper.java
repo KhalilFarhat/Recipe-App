@@ -168,6 +168,21 @@ public class dbHelper extends SQLiteOpenHelper {
         Favorites.removeAll(Collections.singleton(0));
         return Favorites;
     }
+    public boolean changeEmail(String oldEmail, String newEmail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("email", newEmail);
+
+        // updating row
+        int result = db.update(TABLE_NAME, values, COLUMN_EMAIL + " = ?", new String[] { oldEmail });
+        db.close();
+
+        return result > 0;
+
+    }
+
+
     public boolean isBookmarked(int bm, String email){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_EMAIL + " = ?";

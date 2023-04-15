@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Typeface;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -68,6 +70,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                     {
                         EditText passwordEditTextOld = view.findViewById(R.id.password_edit_text_old);
                         EditText passwordEditTextNew = view.findViewById(R.id.password_edit_text_new);
+                        if (passwordEditTextOld != null && passwordEditTextNew != null) {
+                            passwordEditTextOld.setTypeface(null, Typeface.BOLD);
+                            passwordEditTextNew.setTypeface(null, Typeface.BOLD);
+                        }
+
                         dbHelper db = new dbHelper(getContext());
                         SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
                         String email = sp.getString("email", "");
@@ -88,6 +95,59 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 return true;
             }
         });
+        Preference changeEmailPreference = findPreference("change_email");
+        changeEmailPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                // Inflate the dialog view
+                View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.change_email_dialog, null);
+
+                // Get references to the dialog elements
+                EditText oldEmailEditText = dialogView.findViewById(R.id.old_email_edit_text);
+                EditText newEmailEditText = dialogView.findViewById(R.id.new_email_edit_text);
+                if (oldEmailEditText != null && newEmailEditText != null) {
+                    oldEmailEditText.setTypeface(null, Typeface.BOLD);
+                    newEmailEditText.setTypeface(null, Typeface.BOLD);
+                }
+
+                // Create the AlertDialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setView(dialogView);
+                builder.setNegativeButton("Cancel", null);
+                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String oldEmail = oldEmailEditText.getText().toString().trim();
+                        String newEmail = newEmailEditText.getText().toString().trim();
+
+                        if (oldEmail.isEmpty() || newEmail.isEmpty()) {
+                            Toast.makeText(getActivity(), "Please enter both old and new email", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        // Update the email in the database
+                        dbHelper db = new dbHelper(getContext());
+                        if (db.changeEmail(oldEmail, newEmail)) {
+                            // Update the email in shared preferences
+                            SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("email", newEmail);
+                            editor.apply();
+
+                            Toast.makeText(getActivity(), "Email updated successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Failed to update email", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                // Show the dialog
+                builder.show();
+                return true;
+            }
+        });
+
+
         Preference deleteAccountPreference = findPreference("delete_account");
         deleteAccountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

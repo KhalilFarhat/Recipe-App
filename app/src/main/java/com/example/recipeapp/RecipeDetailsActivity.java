@@ -1,11 +1,16 @@
 package com.example.recipeapp;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Html;
+import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
@@ -14,6 +19,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.core.text.HtmlCompat;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
@@ -33,6 +40,8 @@ import com.example.recipeapp.Models.SimilarRecipeResponse;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+
+import org.xml.sax.XMLReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +82,27 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             bookmarkIcon.setImageResource(R.drawable.emptybookmark);
         }
         else {
-            bookmarkIcon.setImageResource(R.drawable.bookmark);
+            bookmarkIcon.setImageResource(R.drawable.bookmark_added);
         }
+        // Add OnClickListener to bookmark icon
+        bookmarkIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bookmarked) {
+                    // Remove recipe from bookmarks
+                    db.removeBookmark(id, email);
+                    bookmarkIcon.setImageResource(R.drawable.emptybookmark);
+                    bookmarked = false;
+                    Toast.makeText(getApplicationContext(), "Recipe removed from bookmarks", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Add recipe to bookmarks
+                    db.addBookmark(id, email);
+                    bookmarkIcon.setImageResource(R.drawable.bookmark_added);
+                    bookmarked = true;
+                    Toast.makeText(getApplicationContext(), "Recipe added to bookmarks", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         RequestManager manager = new RequestManager(getApplicationContext());
         manager.getRecipeDetails(recipeDetailsListener, id);
         manager.getSimilarRecipes(similarRecipesListener, id);
@@ -116,7 +144,66 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         recycler_meal_similar = findViewById(R.id.recycler_meal_similar);
         recycler_meal_instructions = findViewById(R.id.recycler_meal_instructions);
 
+        ImageView shareButton = findViewById(R.id.share);
+        TextView recipeSourceTextView = findViewById(R.id.textView_meal_source);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the recipe source
+                String recipeSource = recipeSourceTextView.getText().toString();
+
+                // Copy the recipe source to clipboard
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Recipe Source", recipeSource);
+                clipboard.setPrimaryClip(clip);
+
+                // Show toast message
+                Toast.makeText(getApplicationContext(), "Source Link Copied", Toast.LENGTH_SHORT).show();
+            }
+        });
+        String mealSummaryHtml = textView_meal_summary.getText().toString();
+        String mealSummaryPlainText = Html.fromHtml(mealSummaryHtml, null, new HtmlTagHandler()).toString();
+        textView_meal_summary.setText(mealSummaryPlainText);
+
     }
+    private static class HtmlTagHandler implements Html.TagHandler {
+        @Override
+        public void handleTag(boolean opening, String tag, Editable output, XMLReader xmlReader) {
+            if (!tag.equalsIgnoreCase("br")) {
+                // Remove all tags except for <br>
+                if (opening) {
+                    output.setSpan(new SpannableStringBuilder(), output.length(), output.length(), Spannable.SPAN_MARK_MARK);
+                } else {
+                    Object obj = getLast(output, SpannableStringBuilder.class);
+                    int start = output.getSpanStart(obj);
+                    int end = output.length();
+                    output.removeSpan(obj);
+                    if (start != end) {
+                        String strippedText = Html.fromHtml(output.subSequence(start, end).toString()).toString();
+                        output.replace(start, end, strippedText);
+                    }
+                }
+            }
+        }
+
+        private Object getLast(Editable text, Class<?> kind) {
+            Object[] objs = text.getSpans(0, text.length(), kind);
+
+            if (objs.length == 0) {
+                return null;
+            } else {
+                for (int i = objs.length; i > 0; i--) {
+                    if (text.getSpanFlags(objs[i - 1]) == Spannable.SPAN_MARK_MARK) {
+                        return objs[i - 1];
+                    }
+                }
+                return null;
+            }
+        }
+    }
+
+
 
 
 
@@ -131,7 +218,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             textView_meal_source.setText(response.sourceUrl);
             textView_meal_summary.setText(response.summary);
             Picasso.get().load(response.image).into(imageView_meal_image);
-            Toast.makeText(RecipeDetailsActivity.this, response.id+"", Toast.LENGTH_LONG).show();
 
             recycler_meal_ingredients.setHasFixedSize(true);
             recycler_meal_ingredients.setLayoutManager(new LinearLayoutManager(RecipeDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
@@ -192,7 +278,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         if(!bookmarked){
             if(!db.areBookmarksFull(email)) {
-                bookmarkIcon.setImageResource(R.drawable.bookmark);
+                bookmarkIcon.setImageResource(R.drawable.bookmark_added);
                 db.addBookmark(id, email);
             }
             else {
