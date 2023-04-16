@@ -16,30 +16,32 @@
         android:padding="10dp"
         android:layout_marginBottom="10dp">
 
+
         <Spinner
             android:id="@+id/spinner2"
-            android:layout_width="172dp"
-            android:layout_height="48dp"
-            android:background="@drawable/rounded_bg"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:entries="@array/tags"
-            android:popupBackground="@drawable/spinner_dropdown_bg"
+            android:layout_width="168dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="28dp"
             android:dropDownVerticalOffset="48dp"
-            android:spinnerMode="dropdown"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:entries="@array/tags"
+            android:hapticFeedbackEnabled="true"
+            android:popupBackground="@drawable/spinner_dropdown_bg"
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:spinnerDropDownItemStyle="@style/CustomSpinnerDropDownStyle"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView_welcome"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/textView_welcome"
             android:layout_width="168dp"
             android:layout_height="71dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/poppinsblack"
             android:text="What are we eating?"
             android:textColor="@color/black"

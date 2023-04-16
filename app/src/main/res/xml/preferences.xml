@@ -29,21 +29,8 @@
             android:defaultValue="true"/>
 
         <!-- Dark Mode Checkbox Preference -->
-        <CheckBoxPreference
-            app:iconSpaceReserved="true"
-            android:key="dark_mode"
-            android:title="Dark Mode (Beta)"
-            android:summaryOn="Dark Mode Enabled"
-            android:icon="@drawable/moon"
-            android:summaryOff="Dark Mode Disabled"
-            android:defaultValue="false"/>
 
         <!-- Change Email Preference -->
-        <Preference
-            android:title="Change Email"
-            android:icon="@drawable/email"
-            android:summary="Update your registered email address"
-            android:key="change_email"/>
 
         <!-- Change Password Preference -->
         <Preference

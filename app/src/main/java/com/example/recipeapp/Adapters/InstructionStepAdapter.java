@@ -37,15 +37,15 @@ public class InstructionStepAdapter extends RecyclerView.Adapter<InstructionStep
         holder.textView_instructions_step_number.setText(String.valueOf(List.get(position).number));
         holder.textView_instructions_step_title.setText(List.get(position).step);
 
-        holder.recycler_instructions_ingredients.setHasFixedSize(true);
-        holder.recycler_instructions_ingredients.setLayoutManager(new LinearLayoutManager(context , LinearLayoutManager.HORIZONTAL , false));
-        InstructionsIngredientsAdapter instructionsIngredientsAdapter = new InstructionsIngredientsAdapter(context, List.get(position).ingredients);
-        holder.recycler_instructions_ingredients.setAdapter(instructionsIngredientsAdapter);
-
-        holder.recycler_instructions_equipments.setHasFixedSize(true);
-        holder.recycler_instructions_ingredients.setLayoutManager(new LinearLayoutManager(context , LinearLayoutManager.HORIZONTAL , false));
-        InstructionsEquipmentsAdapter instructionsEquipmentsAdapter = new InstructionsEquipmentsAdapter(context , List.get(position).equipment);
-        holder.recycler_instructions_equipments.setAdapter(instructionsEquipmentsAdapter);
+//        holder.recycler_instructions_ingredients.setHasFixedSize(true);
+//        holder.recycler_instructions_ingredients.setLayoutManager(new LinearLayoutManager(context , LinearLayoutManager.HORIZONTAL , false));
+//        InstructionsIngredientsAdapter instructionsIngredientsAdapter = new InstructionsIngredientsAdapter(context, List.get(position).ingredients);
+//        holder.recycler_instructions_ingredients.setAdapter(instructionsIngredientsAdapter);
+//
+//        holder.recycler_instructions_equipments.setHasFixedSize(true);
+//        holder.recycler_instructions_ingredients.setLayoutManager(new LinearLayoutManager(context , LinearLayoutManager.HORIZONTAL , false));
+//        InstructionsEquipmentsAdapter instructionsEquipmentsAdapter = new InstructionsEquipmentsAdapter(context , List.get(position).equipment);
+//        holder.recycler_instructions_equipments.setAdapter(instructionsEquipmentsAdapter);
     }
 
     @Override
@@ -63,7 +63,5 @@ class InstructionStepViewHolder extends RecyclerView.ViewHolder{
 
         textView_instructions_step_number = itemView.findViewById(R.id.textView_instructions_step_number);
         textView_instructions_step_title = itemView.findViewById(R.id.textView_instructions_step_title);
-        recycler_instructions_equipments = itemView.findViewById(R.id.recycler_instructions_equipments);
-        recycler_instructions_ingredients = itemView.findViewById(R.id.recycler_instructions_ingredients);
-    }
+           }
 }

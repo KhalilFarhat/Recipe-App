@@ -19,8 +19,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.text.HtmlCompat;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
@@ -45,7 +48,6 @@ import org.xml.sax.XMLReader;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     int id;
@@ -79,7 +81,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
         RequestManager manager = new RequestManager(getApplicationContext());
         manager.getRecipeDetails(recipeDetailsListener, id);
-        manager.getSimilarRecipes(similarRecipesListener, id);
         manager.getInstructions(instructionsListener,id);
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading Details...");
@@ -91,10 +92,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private void findViews() {
         textView_meal_name = findViewById(R.id.textView_meal_name);
         textView_meal_source = findViewById(R.id.textView_meal_source);
-        textView_meal_summary = findViewById(R.id.textView_meal_summary);
+//        textView_meal_summary = findViewById(R.id.textView_meal_summary);
         imageView_meal_image = findViewById(R.id.imageView_meal_image);
         recycler_meal_ingredients = findViewById(R.id.recycler_meal_ingredients);
-        recycler_meal_similar = findViewById(R.id.recycler_meal_similar);
+//        recycler_meal_similar = findViewById(R.id.recycler_meal_similar);
         recycler_meal_instructions = findViewById(R.id.recycler_meal_instructions);
 
         ImageView shareButton = findViewById(R.id.share);
@@ -115,11 +116,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Source Link Copied", Toast.LENGTH_SHORT).show();
             }
         });
-        String mealSummaryHtml = textView_meal_summary.getText().toString();
+//        String mealSummaryHtml = textView_meal_summary.getText().toString();
 
-        String mealSummaryPlainText = String.valueOf(HtmlCompat.fromHtml(mealSummaryHtml,HtmlCompat.FROM_HTML_MODE_LEGACY));
+//        String mealSummaryPlainText = String.valueOf(HtmlCompat.fromHtml(mealSummaryHtml,HtmlCompat.FROM_HTML_MODE_LEGACY));
 
-        textView_meal_summary.setText(mealSummaryPlainText);
+//        textView_meal_summary.setText(mealSummaryPlainText);
 
     }
 
@@ -129,13 +130,15 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private final RecipeDetailsListener recipeDetailsListener = new RecipeDetailsListener() {
         @Override
         public void didFetch(RecipeDetailsResponse response, String message) {
+
+
             dialog.dismiss();
 
             textView_meal_name.setText(response.title);
             textView_meal_source.setText(response.sourceUrl);
-            textView_meal_summary.setText(response.summary);
-            Picasso.get().load(response.image).into(imageView_meal_image);
-
+//            textView_meal_summary.setText(response.summary);
+//            Picasso.get().load(response.image).into(imageView_meal_image);
+            Picasso.get().load(response.image).transform(new RoundedCornersTransformation(100,0)).into(imageView_meal_image);
             recycler_meal_ingredients.setHasFixedSize(true);
             recycler_meal_ingredients.setLayoutManager(new LinearLayoutManager(RecipeDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
             ingredientsAdapter = new IngredientsAdapter(RecipeDetailsActivity.this, response.extendedIngredients);
@@ -144,33 +147,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         @Override
         public void didError(String message) {
             Toast.makeText(RecipeDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    private final SimilarRecipesListener similarRecipesListener = new SimilarRecipesListener() {
-        @Override
-        public void didFetch(List<SimilarRecipeResponse> response, String message) {
-            Toast.makeText(RecipeDetailsActivity.this, "LOL", Toast.LENGTH_LONG).show();
-            Log.d("RESPONSE",response.get(0).toString());
-            recycler_meal_similar.setHasFixedSize(true);
-            recycler_meal_similar.setLayoutManager(new LinearLayoutManager(RecipeDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
-            similarRecipeAdapter = new SimilarRecipeAdapter(RecipeDetailsActivity.this, response, recipeClickListener);
-            recycler_meal_similar.setAdapter(similarRecipeAdapter);
-        }
-        @Override
-        public void didError(String errorMessage) {
-            Toast.makeText(RecipeDetailsActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-            Log.d("Error",errorMessage);
-        }
-    };
-
-
-    private final RecipeClickListener recipeClickListener = new RecipeClickListener() {
-        @Override
-        public void onRecipeClicked(String id) {
-            Intent intent = new Intent(RecipeDetailsActivity.this, RecipeDetailsActivity.class);
-            intent.putExtra("id", id);
-            startActivity(intent);
         }
     };
 

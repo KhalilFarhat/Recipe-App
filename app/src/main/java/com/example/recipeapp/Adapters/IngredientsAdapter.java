@@ -38,7 +38,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         holder.textView_ingredient_name.setSelected(true);
         holder.textView_ingredient_quantity.setText(list.get(position).original);
         holder.textView_ingredient_quantity.setSelected(true);
-        Picasso.get().load("https://spoonacular.com/cdn/ingredients_100x100/"+ list.get(position).image).into(holder.imageView_ingredients);
+        Picasso.get().load("https://spoonacular.com/cdn/ingredients_250x250/"+ list.get(position).image).into(holder.imageView_ingredients);
     }
 
     @Override

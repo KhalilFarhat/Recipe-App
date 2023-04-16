@@ -95,58 +95,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 return true;
             }
         });
-        Preference changeEmailPreference = findPreference("change_email");
-        changeEmailPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                // Inflate the dialog view
-                View dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.change_email_dialog, null);
-
-                // Get references to the dialog elements
-                EditText oldEmailEditText = dialogView.findViewById(R.id.old_email_edit_text);
-                EditText newEmailEditText = dialogView.findViewById(R.id.new_email_edit_text);
-                if (oldEmailEditText != null && newEmailEditText != null) {
-                    oldEmailEditText.setTypeface(null, Typeface.BOLD);
-                    newEmailEditText.setTypeface(null, Typeface.BOLD);
-                }
-
-                // Create the AlertDialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setView(dialogView);
-                builder.setNegativeButton("Cancel", null);
-                builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String oldEmail = oldEmailEditText.getText().toString().trim();
-                        String newEmail = newEmailEditText.getText().toString().trim();
-
-                        if (oldEmail.isEmpty() || newEmail.isEmpty()) {
-                            Toast.makeText(getActivity(), "Please enter both old and new email", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        // Update the email in the database
-                        dbHelper db = new dbHelper(getContext());
-                        if (db.changeEmail(oldEmail, newEmail)) {
-                            // Update the email in shared preferences
-                            SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("email", newEmail);
-                            editor.apply();
-
-                            Toast.makeText(getActivity(), "Email updated successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getActivity(), "Failed to update email", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
-                // Show the dialog
-                builder.show();
-                return true;
-            }
-        });
-
 
         Preference deleteAccountPreference = findPreference("delete_account");
         deleteAccountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -204,30 +152,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             }
         });
 
-        // Get the CheckBoxPreference object for the dark mode setting
-        CheckBoxPreference darkModePref = findPreference("dark_mode");
 
-        // Set the preference's summary to reflect its current value
-        assert darkModePref != null;
-        darkModePref.setSummaryOn("Enabled");
-        darkModePref.setSummaryOff("Disabled");
 
-        // Set a listener to detect when the preference value changes
-        darkModePref.setOnPreferenceChangeListener((preference, newValue) -> {
-            boolean enabled = (boolean) newValue;
-            if (enabled) {
-                // Apply the dark mode theme
-                requireActivity().setTheme(R.style.Dark_Theme_RecipeApp);
-            } else {
-                // Revert to the default theme
-                requireActivity().setTheme(R.style.Theme_RecipeApp);
-            }
-            new Handler().postDelayed(() -> {
-                // Recreate the activity to apply the new theme
-                requireActivity().recreate();
-            }, 100);
-            return true;
-        });
 
         // Get the Preference object for the privacy policy setting
         Preference privacyPolicyPref = findPreference("privacy_policy");

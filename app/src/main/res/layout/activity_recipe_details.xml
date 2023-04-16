@@ -118,43 +118,10 @@
                 tools:ignore="ContentDescription" />
 
 
-            <TextView
-                android:id="@+id/textView_meal_summary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:fontFamily="@font/poppinsblack"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="normal"
-                android:maxLines="8"
-                android:textAlignment="textEnd"
-                android:justificationMode="inter_word"
-                tools:ignore="HardcodedText" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_meal_instructions"
                 android:layout_width="match_parent"
                 android:background="@drawable/rounded_background"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppinsblack"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="Similar Recipes"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_meal_similar"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
 
