@@ -136,8 +136,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
             textView_meal_name.setText(response.title);
             textView_meal_source.setText(response.sourceUrl);
-//            textView_meal_summary.setText(response.summary);
-//            Picasso.get().load(response.image).into(imageView_meal_image);
+//
             Picasso.get().load(response.image).transform(new RoundedCornersTransformation(100,0)).into(imageView_meal_image);
             recycler_meal_ingredients.setHasFixedSize(true);
             recycler_meal_ingredients.setLayoutManager(new LinearLayoutManager(RecipeDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
@@ -146,7 +145,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
         @Override
         public void didError(String message) {
-            Toast.makeText(RecipeDetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+
         }
     };
 

@@ -114,18 +114,25 @@ public class dbHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if(cursor.getInt(4) == 0){
             cv.put(BOOKMARK1, bm);
-            Toast.makeText(context, "Add Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Bookmarked Successfully", Toast.LENGTH_SHORT).show();
         }
         else if (cursor.getInt(5) == 0){
             cv.put(BOOKMARK2, bm);
-            Toast.makeText(context, "Add Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Bookmarked Successfully", Toast.LENGTH_SHORT).show();
         }
-        else if (cursor.getInt(6) == 0)
+        else if (cursor.getInt(6) == 0) {
             cv.put(BOOKMARK3, bm);
-        else if (cursor.getInt(7) == 0)
+            Toast.makeText(context, "Bookmarked Successfully", Toast.LENGTH_SHORT).show();
+        }
+        else if (cursor.getInt(7) == 0) {
             cv.put(BOOKMARK4, bm);
-        else if (cursor.getInt(8) == 0)
+            Toast.makeText(context, "Bookmarked Successfully", Toast.LENGTH_SHORT).show();
+
+        }
+        else if (cursor.getInt(8) == 0) {
             cv.put(BOOKMARK5, bm);
+            Toast.makeText(context, "Bookmarked Successfully", Toast.LENGTH_SHORT).show();
+        }
         else
             Toast.makeText(context, "Cannot add more than 5 favorites.", Toast.LENGTH_SHORT).show();
         db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});
@@ -138,21 +145,25 @@ public class dbHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if(cursor.getInt(4) == bm){
             cv.put(BOOKMARK1, 0);
-            Toast.makeText(context, "Removed Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Removed Bookmark Successfully", Toast.LENGTH_SHORT).show();
         }
         else if (cursor.getInt(5) == bm){
             cv.put(BOOKMARK2, 0);
-            Toast.makeText(context, "Removed Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Removed Bookmark Successfully", Toast.LENGTH_SHORT).show();
         }
-        else if (cursor.getInt(6) == bm)
+        else if (cursor.getInt(6) == bm) {
             cv.put(BOOKMARK3, 0);
-        else if (cursor.getInt(7) == bm)
+            Toast.makeText(context, "Removed Bookmark Successfully", Toast.LENGTH_SHORT).show();
+        }
+        else if (cursor.getInt(7) == bm) {
             cv.put(BOOKMARK4, 0);
-        else if (cursor.getInt(8) == bm)
+            Toast.makeText(context, "Removed Bookmark Successfully", Toast.LENGTH_SHORT).show();
+        }
+        else if (cursor.getInt(8) == bm) {
             cv.put(BOOKMARK5, 0);
-        else
-            Toast.makeText(context, "BRUH", Toast.LENGTH_SHORT).show();
-        db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});
+            Toast.makeText(context, "Removed Bookmark Successfully", Toast.LENGTH_SHORT).show();
+        }
+            db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});
     }
     public ArrayList<Integer> getBookmarks(String email){
         ArrayList<Integer> Favorites = new ArrayList<>();
@@ -212,8 +223,8 @@ public class dbHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, new String[]{email});
         cursor.moveToFirst();
         if (!Objects.equals(oldPassword, cursor.getString(3))){
-            Toast.makeText(context, oldPassword, Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, cursor.getString(3), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, oldPassword, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, cursor.getString(3), Toast.LENGTH_SHORT).show();
             return false;}
         cv.put(COLUMN_PASSWORD, newPassword);
         db.update(TABLE_NAME, cv, COLUMN_EMAIL + " = ?", new String[]{email});

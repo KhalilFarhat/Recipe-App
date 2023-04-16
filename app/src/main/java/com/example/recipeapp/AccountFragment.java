@@ -83,14 +83,12 @@ public class AccountFragment extends Fragment {
         dialog = new ProgressDialog(getContext());
         dialog.setTitle("Loading Details...");
         dialog.show();
-        Toast.makeText(getActivity().getApplicationContext(), "CALLED ON RESUME", Toast.LENGTH_SHORT).show();
         recipeList = new ArrayList<>();
             dbHelper db = new dbHelper(getContext());
             SharedPreferences sp = getContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
             String email = sp.getString("email", "");
             ArrayList<Integer> IDS = db.getBookmarks(email);
             
-            Toast.makeText(getActivity().getApplicationContext(), IDS.size() + "", Toast.LENGTH_SHORT).show();
             if(IDS.size()==0){
                 recyclerView = requireView().findViewById(R.id.bookmark_rv);
                 recyclerView.setAdapter(null);
